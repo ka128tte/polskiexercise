@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>Polskie czasowniki - Grupa I</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+        }
+        .correct {
+            color: darkgreen;
+            background-color: lightgreen;
+        }
+        .incorrect {
+            color: darkred;
+            background-color: lightcoral;
+            text-decoration: line-through;
+        }
+        input[type="text"] {
+            width: 100px;
+        }
+        .question p {
+            font-size: 1.5em;
+			margin-top: 100px
+		}
+		</style>
+</head>
+<body>
+    <h1>Polskie czasowniki - Grupa I</h1>
+    <form id="cloze-test">
+        <!-- Questions will be inserted here by JavaScript -->
+    </form>
+
+    <script>
+        var verbs = [
+             {verb: "Dać", translation: "Дать", forms: ["dam", "dasz", "da", "damy", "dacie", "dają"]},
+			 {verb: "Chować", translation: "Прятать", forms: ["chowam", "chowasz", "chowa", "chowamy", "chowacie", "chowają"]},
+			 {verb: "Grać", translation: "Играть", forms: ["gram", "grasz", "gra", "gramy", "gracie", "grają"]},
+			 {verb: "Klikać", translation: "Кликать", forms: ["klikam", "klikasz", "klika", "klikamy", "klikacie", "klikają"]},
+			 {verb: "Latać", translation: "Летать", forms: ["latam", "latasz", "lata", "latamy", "latacie", "latają"]},
+			 {verb: "Narzekać", translation: "Жаловаться", forms: ["narzekam", "narzekasz", "narzeka", "narzekamy", "narzekacie", "narzekają"]},
+			 {verb: "Oddać", translation: "Отдать", forms: ["oddam", "oddasz", "odda", "oddamy", "oddacie", "oddają"]},
+			 {verb: "Odkrywać", translation: "Открывать", forms: ["odkrywam", "odkrywasz", "odkrywa", "odkrywamy", "odkrywacie", "odkrywają"]},
+			 {verb: "Otwierać", translation: "Открывать", forms: ["otwieram", "otwierasz", "otwiera", "otwieramy", "otwieracie", "otwierają"]},
+            {verb: "Biegać", translation: "Бегать", forms: ["biegam", "biegasz", "biega", "biegamy", "biegacie", "biegają"]},
+            {verb: "Czekać", translation: "Ждать", forms: ["czekam", "czekasz", "czeka", "czekamy", "czekacie", "czekają"]},
+            {verb: "Kochać", translation: "Любить", forms: ["kocham", "kochasz", "kocha", "kochamy", "kochacie", "kochają"]},
+            {verb: "Pytać", translation: "Спрашивать", forms: ["pytam", "pytasz", "pyta", "pytamy", "pytacie", "pytają"]},
+            {verb: "Pływać", translation: "Плавать", forms: ["pływam", "pływasz", "pływa", "pływamy", "pływacie", "pływają"]},
+			{verb: "Śpiewać", translation: "Петь", forms: ["śpiewam", "śpiewasz", "śpiewa", "śpiewamy", "śpiewacie", "śpiewają"]},
+            {verb: "Zabierać", translation: "Забрать", forms: ["zabieram", "zabierasz", "zabiera", "zabieramy", "zabieracie", "zabierają"]},
+			{verb: "Zamykać", translation: "Закрывать", forms: ["zamykam", "zamykasz", "zamyka", "zamykamy", "zamykacie", "zamykają"]},
+            // Add the rest of the verbs in the same way
+        ];
+
+        var form = document.getElementById('cloze-test');
+
+        verbs.forEach(function(verbObj, index) {
+            var questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            var questionP = document.createElement('p');
+            questionP.textContent = (index + 1) + '. ' + verbObj.verb + ' (' + verbObj.translation + '):';
+            questionDiv.appendChild(questionP);
+
+            var pronouns = ["Ja", "Ty", "On/ona/ono", "My", "Wy", "Oni/one"];
+            pronouns.forEach(function(pronoun, i) {
+                questionDiv.innerHTML += pronoun + ' <input type="text" data-answer="' + verbObj.forms[i] + '">. ';
+            });
+
+            form.appendChild(questionDiv);
+        });
+
+        var inputs = document.querySelectorAll('#cloze-test input');
+        inputs.forEach(function(input) {
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    if (this.value.toLowerCase() === this.dataset.answer.toLowerCase()) {
+                        this.className = 'correct';
+                        this.value += ' ✔️';
+                    } else {
+                        this.className = 'incorrect';
+                        this.value += ' ❌';
+                    }
+                }
+            });
+        });
+    </script>
+	<h2 style="font-size: 1.5em; margin: 100px 0;">
+	<a href="";>Вернитесь на главную страницу.</a>
+	</h2>
+</body>
+</html>
