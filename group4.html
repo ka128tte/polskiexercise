@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>Polskie czasowniki - Grupa IV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+        }
+        .correct {
+            color: darkgreen;
+            background-color: lightgreen;
+        }
+        .incorrect {
+            color: darkred;
+            background-color: lightcoral;
+            text-decoration: line-through;
+        }
+        input[type="text"] {
+            width: 100px;
+        }
+        .question p {
+            font-size: 1.5em;
+			margin-top: 100px
+		}
+		</style>
+</head>
+<body>
+    <h1>Polskie czasowniki - Grupa I</h1>
+    <form id="cloze-test">
+        <!-- Questions will be inserted here by JavaScript -->
+    </form>
+
+    <script>
+        var verbs = [
+			{verb: "Całować", translation: "Целовать", forms: ["całuję", "całujesz", "całuje", "całujemy", "całujecie", "całują"]},
+            {verb: "Denerwować", translation: "Расстроить", forms: ["denerwuję", "denerwujesz", "denerwuje", "denerwujemy", "denerwujecie", "denerwują"]},
+            {verb: "Dyskutować", translation: "Обсуждать", forms: ["dyskutuję", "dyskutujesz", "dyskutuje", "dyskutujemy", "dyskutujecie", "dyskutują"]},
+            {verb: "Gotować", translation: "Готовить,варить", forms: ["gotuję", "gotujesz", "gotuje", "gotujemy", "gotujecie", "gotują"]},
+            {verb: "Handlować", translation: "Торговать", forms: ["handluję", "handlujesz", "handluje", "handlujemy", "handlujecie", "handlują"]},
+			{verb: "Kierować", translation: "Направлять,управлять, руководить", forms: ["kieruję", "kierujesz", "kieruje", "kierujemy", "kierujecie", "kierują"]},
+            {verb: "Kupować", translation: "Покупать", forms: ["kupuję", "kupujesz", "kupuje", "kupujemy", "kupujecie", "kupują"]},
+			{verb: "Malować", translation: "Рисовать краской", forms: ["maluję", "malujesz", "maluje", "malujemy", "malujecie", "malują"]},
+			{verb: "Marnować", translation: "Терять,транжирить", forms: ["marnuję", "marnujesz", "marnuje", "marnujemy", "marnujecie", "marnują"]},
+            {verb: "Obserwować", translation: "Наблюдать,", forms: ["obserwuję", "obserwujesz", "obserwuje", "obserwujemy", "obserwujecie", "obserwują"]},
+			{verb: "Pakować", translation: "Паковать", forms: ["pakuję", "pakujesz", "pakuje", "pakujemy", "pakujecie", "pakują"]},
+			{verb: "Pasować", translation: "Подходить,вмещаться", forms: ["pasuję", "pasujesz", "pasuje", "pasujemy", "pasujecie", "pasują"]},
+			{verb: "Planować", translation: "Планировать", forms: ["planuję", "planujesz", "planuje", "planujemy", "planujecie", "planują"]},
+			{verb: "Potrzebować", translation: "Нуждаться, потребоваться", forms: ["potrzebuję", "potrzebujesz", "potrzebuje", "potrzebujemy", "potrzebujecie", "potrzebują"]},
+            {verb: "Pracować", translation: "Работать", forms: ["pracuję", "pracujesz", "pracuje", "pracujemy", "pracujecie", "pracują"]},
+			{verb: "Przygotować", translation: "Подготовить,Приготовить", forms: ["przygotuję", "przygotujesz", "przygotuje", "przygotujemy", "przygotujecie", "przygotują"]},
+			{verb: "Rysować", translation: "Рисовать (карандашом)", forms: ["rysuję", "rysujesz", "rysuje", "rysujemy", "rysujecie", "rysują"]},
+			{verb: "Szanować", translation: "Уважать", forms: ["znajduję", "znajdujesz", "znajduje", "znajdujemy", "znajdujecie", "znajdują"]},
+			{verb: "Wariować", translation: "Сходить с ума", forms: ["znajduję", "znajdujesz", "znajduje", "znajdujemy", "znajdujecie", "znajdują"]},
+			{verb: "Znajdować", translation: "Находить", forms: ["znajduję", "znajdujesz", "znajduje", "znajdujemy", "znajdujecie", "znajdują"]},
+			{verb: "Żałować", translation: "Жалеть,сожалеть", forms: ["żałuję", "żałujesz", "żałuje", "żałujemy", "żałujecie", "żałują"]},
+            // Add the rest of the verbs in the same way
+        ];
+
+        var form = document.getElementById('cloze-test');
+
+        verbs.forEach(function(verbObj, index) {
+            var questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            var questionP = document.createElement('p');
+            questionP.textContent = (index + 1) + '. ' + verbObj.verb + ' (' + verbObj.translation + '):';
+            questionDiv.appendChild(questionP);
+
+            var pronouns = ["Ja", "Ty", "On/ona/ono", "My", "Wy", "Oni/one"];
+            pronouns.forEach(function(pronoun, i) {
+                questionDiv.innerHTML += pronoun + ' <input type="text" data-answer="' + verbObj.forms[i] + '">. ';
+            });
+
+            form.appendChild(questionDiv);
+        });
+
+        var inputs = document.querySelectorAll('#cloze-test input');
+        inputs.forEach(function(input) {
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    if (this.value.toLowerCase() === this.dataset.answer.toLowerCase()) {
+                        this.className = 'correct';
+                        this.value += ' ✔️';
+                    } else {
+                        this.className = 'incorrect';
+                        this.value += ' ❌';
+                    }
+                }
+            });
+        });
+    </script>
+	<h2 style="font-size: 1.5em; margin: 100px 0;">
+	<a href="index.html";>Вернитесь на главную страницу.</a>
+	</h2>
+</body>
+</html>
