@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Добро пожаловать!</title>
+	<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <style>
+    body {
+        font-family: 'Nunito', sans-serif;
+        text-align: center;
+    }
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+    li {
+        margin-bottom: 10px;
+    }
+    .category {
+        font-weight: bold;
+        cursor: pointer;
+        margin: 10 px;
+        text-align: center;
+    }
+    .subcategory, .sub-subcategory {
+        font-weight: bold;
+        cursor: pointer;
+        margin: 10 px;
+        text-align: center;
+        display: none; /* Add this line */
+    }
+    </style>
+
+  <script>
+function toggleCategory(event, element) {
+    event.stopPropagation();
+    const subElements = element.querySelectorAll('.subcategory, .sub-subcategory');
+    subElements.forEach(subElement => {
+        subElement.style.display = subElement.style.display === 'none' ? 'block' : 'none';
+    });
+    element.style.color = element.style.color === 'black' ? 'purple' : 'black';
+}
+</script>
+
+
+</head>
+<body>
+    <h1>Добро пожаловать на наш сайт!</h1>
+    <p>Здесь вы найдете полезные упражнения по польской грамматике:</p>
+  <ul>
+    <li class="category" onclick="toggleCategory(event, this)">Склонение (Declination)
+        <ul>
+            <li class="subcategory"><a href="genitive.html">Родительный падеж (Genitive)</a></li>
+            <li class="subcategory"><a href="dative.html">Дательный падеж (Dative)</a></li>
+            <li class="subcategory"><a href="accusative.html">Винительный падеж (Accusative)</a></li>
+            <!-- Add more subcategories as needed -->
+        </ul>
+    </li>
+    <li class="category" onclick="toggleCategory(event, this)">Спряжение (Conjugation)  <!-- Add more details here -->
+        <ul>
+		<li class="subcategory" onclick="event.stopPropagation(); toggleCategory(event, this)">Настоящее время
+                <ul>
+                    <li class="sub-subcategory"><a href="group1.html">Group I</a></li>
+                    <li class="sub-subcategory"><a href="group2.html">Group II</a></li>
+                    <!-- Add more sub-subcategories for Present Tense -->
+                </ul>
+            </li>
+            <li class="subcategory" onclick="event.stopPropagation(); toggleCategory(event, this)">Прошедшее время
+                <ul>
+                    <li class="sub-subcategory"><a href="groupA.html">Group A</a></li>
+                    <li class="sub-subcategory"><a href="groupB.html">Group B</a></li>
+                    <!-- Add more sub-subcategories for Past Tense -->
+                </ul>
+            </li>
+            <!-- Add conjugation subcategories here -->
+        </ul>
+    </li>
+</ul>
+
+</body>
+</html>
