@@ -3,79 +3,88 @@
 <head>
     <meta charset="utf-8">
     <title>Добро пожаловать!</title>
-	<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
-    body {
-        font-family: 'Nunito', sans-serif;
-        text-align: center;
-    }
-    ul {
-        list-style-type: none;
-        padding-left: 0;
-    }
-    li {
-        margin-bottom: 10px;
-    }
-    .category {
-        font-weight: bold;
-        cursor: pointer;
-        margin: 10 px;
-        text-align: center;
-    }
-    .subcategory, .sub-subcategory {
-        font-weight: bold;
-        cursor: pointer;
-        margin: 10 px;
-        text-align: center;
-        display: none; /* Add this line */
-    }
+        body, h1, p, .panel-heading, .panel-body {
+            font-family: 'Nunito', sans-serif;
+        }
+        h1{
+		text-align: center;
+            font-size: 2em;
+        }
+		p{
+		text-align: center;
+            font-size: 1em;
+			}
+		.panel-default > .panel-heading-custom {
+text-align: center;
+background: #5a79d6; /*Medium Blue*/
+color: #ffffff
+
+        }
+        .panel-heading:hover {
+            color: #ffadeb; /*Pink*/
+        }
+		.panel-heading-sub:hover {
+            color: #008000; /*Green*/
+        }
+        .panel-body {
+            display: none;
+            text-align: center;
+			background-color: #ADD8E6; /*Light Blue*/
+        }
+        .panel-heading-sub {
+            text-align: center;
+            background-color: #ba8cba; /*Dark purple*/
+        }
+        .panel-body-sub {
+            display: none;
+            text-align: center;
+			background-color: #e8c1e8; /*Light purple*/
+        }
     </style>
-
-  <script>
-function toggleCategory(event, element) {
-    event.stopPropagation();
-    const subElements = element.querySelectorAll('.subcategory, .sub-subcategory');
-    subElements.forEach(subElement => {
-        subElement.style.display = subElement.style.display === 'none' ? 'block' : 'none';
-    });
-    element.style.color = element.style.color === 'black' ? 'purple' : 'black';
-}
-</script>
-
-
 </head>
 <body>
     <h1>Добро пожаловать на наш сайт!</h1>
     <p>Здесь вы найдете полезные упражнения по польской грамматике:</p>
-  <ul>
-    <li class="category" onclick="toggleCategory(event, this)">Склонение (Declination)
-        <ul>
-            <li class="subcategory"><a href="genitive.html">Родительный падеж (Genitive)</a></li>
-            <li class="subcategory"><a href="dative.html">Дательный падеж (Dative)</a></li>
-            <li class="subcategory"><a href="accusative.html">Винительный падеж (Accusative)</a></li>
-            <!-- Add more subcategories as needed -->
-        </ul>
-    </li>
-    <li class="category" onclick="toggleCategory(event, this)">Спряжение (Conjugation)  <!-- Add more details here -->
-        <ul>
-		<li class="subcategory" onclick="event.stopPropagation(); toggleCategory(event, this)">Настоящее время
-                <ul>
-                    <li class="sub-subcategory"><a href="group1.html">Group I</a></li>
-                    <li class="sub-subcategory"><a href="group2.html">Group II</a></li>
-                    <!-- Add more sub-subcategories for Present Tense -->
-                </ul>
-            </li>
-            <li class="subcategory" onclick="event.stopPropagation(); toggleCategory(event, this)">Прошедшее время
-                <ul>
-                    <li class="sub-subcategory"><a href="groupA.html">Group A</a></li>
-                    <li class="sub-subcategory"><a href="groupB.html">Group B</a></li>
-                    <!-- Add more sub-subcategories for Past Tense -->
-                </ul>
-            </li>
-            <!-- Add conjugation subcategories here -->
-        </ul>
-    </li>
-</ul>
-
+    <div class="container">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading panel-heading-custom">Склонение (Declination)</div>
+                <div class="panel-body">
+                    <a href="genitive.html">Родительный падеж (Genitive)</a><br>
+                    <a href="dative.html">Дательный падеж (Dative)</a><br>
+                    <a href="accusative.html">Винительный падеж (Accusative)</a>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading panel-heading-custom">Спряжение (Conjugation)</div>
+                <div class="panel-body">
+                    <div class="panel-group">
+                            <div class="panel-heading-sub">Настоящее время</div>
+                            <div class="panel-body-sub">
+                                <a href="group1.html">Group I</a><br>
+                                <a href="group2.html">Group II</a>
+                            </div>
+                            <div class="panel-heading-sub">Прошедшее время</div>
+                            <div class="panel-body-sub">
+                                <a href="groupA.html">Group A</a><br>
+                                <a href="groupB.html">Group B</a><br>
+						    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $(".panel-heading, .panel-heading-sub").click(function(){
+                $(this).next(".panel-body, .panel-body-sub").slideToggle();
+            });
+        });
+    </script>
 </body>
 </html>
