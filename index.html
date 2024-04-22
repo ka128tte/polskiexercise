@@ -8,18 +8,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
-        body, h1, p, .panel-heading, .panel-body {
+	 @keyframes twinkle {
+            0% {opacity: 1;}
+            50% {opacity: 0.5;}
+            100% {opacity: 1;}
+        }
+        body, p, .panel-heading, .panel-body {
             font-family: 'Nunito', sans-serif;
         }
-        h1{
-		text-align: center;
-            font-size: 2em;
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: lime;
+            animation: twinkle 2s infinite;
         }
-		p{
-		text-align: center;
-            font-size: 1em;
-			}
-		.panel-default > .panel-heading-custom {
+        p {
+            text-align: center;
+            font-size: 1.5em;
+        }
+     .panel-default > .panel-heading-custom {
 text-align: center;
 background: #5a79d6; /*Medium Blue*/
 color: #ffffff
@@ -68,6 +75,8 @@ color: #ffffff
                             <div class="panel-body-sub">
                                 <a href="group1.html">Group I</a><br>
                                 <a href="group2.html">Group II</a>
+								 <a href="group3.html">Group III</a>
+								  <a href="group4.html">Group IV</a>
                             </div>
                             <div class="panel-heading-sub">Прошедшее время</div>
                             <div class="panel-body-sub">
