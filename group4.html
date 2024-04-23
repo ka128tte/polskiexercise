@@ -26,10 +26,27 @@
             font-size: 1.5em;
 			margin-top: 100px
 		}
+
+        button.check-answer {
+            font: "Open Sans", sans-serif;
+            text-transform: uppercase;
+            border-radius: 7px;
+            border: none;
+            color: white;
+            background-color: rgb(59, 121, 80);
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+
+        @media screen and (min-width: 800px) {
+            button.check-answer {
+                display: none;
+            }
+        }
 		</style>
 </head>
 <body>
-    <h1>Polskie czasowniki - Grupa I</h1>
+    <h1>Polskie czasowniki - Grupa IV</h1>
     <form id="cloze-test">
         <!-- Questions will be inserted here by JavaScript -->
     </form>
@@ -73,6 +90,24 @@
             pronouns.forEach(function(pronoun, i) {
                 questionDiv.innerHTML += pronoun + ' <input type="text" data-answer="' + verbObj.forms[i] + '">. ';
             });
+
+            let button = document.createElement("button");
+            button.textContent = "Check";
+            button.type = "button";
+            button.classList.add("check-answer");
+            button.addEventListener("click", (e) => {
+                questionDiv.querySelectorAll("input").forEach((input) => {
+                    if (input.value.toLowerCase() === input.dataset.answer.toLowerCase()) {
+                        input.className = 'correct';
+                        input.value += ' ✔️';
+                    } else {
+                        input.className = 'incorrect';
+                        input.value += ' ❌';
+                    }
+                })
+            })
+            let br = document.createElement("br");
+            questionDiv.append(br, button);
 
             form.appendChild(questionDiv);
         });
