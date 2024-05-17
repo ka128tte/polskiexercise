@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>Polskie czasowniki - Grupa VIb</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+        }
+        .correct {
+            color: darkgreen;
+            background-color: lightgreen;
+        }
+        .incorrect {
+            color: darkred;
+            background-color: lightcoral;
+            text-decoration: line-through;
+        }
+        input[type="text"] {
+            width: 100px;
+        }
+        .question p {
+            font-size: 1.5em;
+            margin-top: 100px;
+        }
+        button.check-answer {
+            font: "Open Sans", sans-serif;
+            text-transform: uppercase;
+            border-radius: 7px;
+            border: none;
+            color: white;
+            background-color: rgb(59, 121, 80);
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+        @media screen and (min-width: 800px) {
+            button.check-answer {
+                display: none;
+            }
+        }
+        .section {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polskie czasowniki - Grupa VIb</h1>
+    <div class="section">
+        <h2>Ci/C</h2>
+        <form id="ci-c-verbs">
+            <!-- Questions will be inserted here by JavaScript -->
+        </form>
+    </div>
+    <div class="section">
+        <h2>Dzi/Dz</h2>
+        <form id="dzi-dz-verbs">
+            <!-- Questions will be inserted here by JavaScript -->
+        </form>
+    </div>
+    <script>
+        var verbs = [
+            {verb: "Błądzić", translation: "Блуждать", forms: ["błądzę", "błądzisz", "błądzi", "błądzimy", "błądzicie", "błądzą"], type: "dzi-dz"},
+        {verb: "Brudzić", translation: "Пачкать, загрязнять", forms: ["brudzę", "brudzisz", "brudzi", "brudzimy", "brudzicie", "brudzą"], type: "dzi-dz"},
+  {verb: "Budzić", translation: "Будить", forms: ["budzę", "budzisz", "budzi", "budzimy", "budzicie", "budzą"], type: "dzi-dz"},
+        {verb: "Chłodzić", translation: "Охлаждать", forms: ["chłodzę", "chłodzisz", "chłodzi", "chłodzimy", "chłodzicie", "chłodzą"], type: "dzi-dz"},
+        {verb: "Chodzić", translation: "Ходить", forms: ["chodzę", "chodzisz", "chodzi", "chodzimy", "chodzicie", "chodzą"], type: "dzi-dz"},
+        {verb: "Chwycić", translation: "Схватить", forms: ["chwycę", "chwycisz", "chwyci", "chwycimy", "chwycicie", "chwycą"], type: "ci-c"},
+        {verb: "Dowodzić", translation: "Командовать / доказывать", forms: ["dowodzę", "dowodzisz", "dowodzi", "dowodzimy", "dowodzicie", "dowodzą"], type: "dzi-dz"},
+        {verb: "Karcić", translation: "Ругать", forms: ["karcę", "karcisz", "karci", "karcimy", "karcicie", "karcą"], type: "ci-c"},
+        {verb: "Kłócić", translation: "Ссориться", forms: ["kłócę", "kłócisz", "kłóci", "kłócimy", "kłócicie", "kłócą"], type: "ci-c"},
+        {verb: "Kręcić", translation: "Вращать, крутить", forms: ["kręcę", "kręcisz", "kręci", "kręcimy", "kręcicie", "kręcą"], type: "ci-c"},
+        {verb: "Krzywdzić", translation: "Причинять вред, обижать", forms: ["krzywdzę", "krzywdzisz", "krzywdzi", "krzywdzimy", "krzywdzicie", "krzywdzą"], type: "dzi-dz"},
+        {verb: "Kształcić", translation: "Обучать", forms: ["kształcę", "kształcisz", "kształci", "kształcimy", "kształcicie", "kształcą"], type: "ci-c"},
+        {verb: "Marudzić", translation: "Ворчать", forms: ["marudzę", "marudzisz", "marudzi", "marudzimy", "marudzicie", "marudzą"], type: "dzi-dz"},
+        {verb: "Nucić", translation: "Напевать", forms: ["nucę", "nucisz", "nuci", "nucimy", "nucicie", "nucą"], type: "ci-c"},
+        {verb: "Nudzić (się)", translation: "заставлять скучать, принуждать, скучать", forms: ["nudzę", "nudzisz", "nudzi", "nudzimy", "nudzicie", "nudzą"], type: "dzi-dz"},
+        {verb: "Obrócić", translation: "Повернуть", forms: ["obrócę", "obrócisz", "obróci", "obrócimy", "obrócicie", "obrócą"], type: "ci-c"},
+        {verb: "Odwiedzić", translation: "Посетить", forms: ["odwiedzę", "odwiedzisz", "odwiedzi", "odwiedzimy", "odwiedzicie", "odwiedzą"], type: "dzi-dz"},
+        {verb: "Płacić", translation: "Платить", forms: ["płacę", "płacisz", "płaci", "płacimy", "płacicie", "płacą"], type: "ci-c"},
+        {verb: "Pocić", translation: "Потеть", forms: ["pocę", "pocisz", "poci", "pocimy", "pocicie", "pocą"], type: "ci-c"},
+        {verb: "Prowadzić", translation: "Вести", forms: ["prowadzę", "prowadzisz", "prowadzi", "prowadzimy", "prowadzicie", "prowadzą"], type: "dzi-dz"},
+        {verb: "Psocić", translation: "Шалить", forms: ["psocę", "psocisz", "psoci", "psocimy", "psocicie", "psocą"], type: "ci-c"},
+        {verb: "Radzić", translation: "Советовать", forms: ["radzę", "radzisz", "radzi", "radzimy", "radzicie", "radzą"], type: "dzi-dz"},
+        {verb: "Rodzić", translation: "Рождать", forms: ["rodzę", "rodzisz", "rodzi", "rodzimy", "rodzicie", "rodzą"], type: "dzi-dz"},
+        {verb: "Rządzić", translation: "Править", forms: ["rządzę", "rządzisz", "rządzi", "rządzimy", "rządzicie", "rządzą"], type: "dzi-dz"},
+        {verb: "Sadzić", translation: "Сажать", forms: ["sadzę", "sadzisz", "sadzi", "sadzimy", "sadzicie", "sadzą"], type: "dzi-dz"},
+        {verb: "Smucić", translation: "Грустить", forms: ["smucę", "smucisz", "smuci", "smucimy", "smucicie", "smucą"], type: "ci-c"},
+        {verb: "Studzić", translation: "Остужать", forms: ["studzę", "studzisz", "studzi", "studzimy", "studzicie", "studzą"], type: "dzi-dz"},
+        {verb: "Śmiecić", translation: "Мусорить", forms: ["śmiecę", "śmiecisz", "śmieci", "śmiecimy", "śmiecicie", "śmiecą"], type: "ci-c"},
+        {verb: "Świecić", translation: "Светить", forms: ["świecę", "świecisz", "świeci", "świecimy", "świecicie", "świecą"], type: "ci-c"},
+        {verb: "Tracić", translation: "Терять", forms: ["tracę", "tracisz", "traci", "tracimy", "tracicie", "tracą"], type: "ci-c"},
+        {verb: "Uwodzić", translation: "Соблазнять", forms: ["uwodzę", "uwodzisz", "uwodzi", "uwodzimy", "uwodzicie", "uwodzą"], type: "dzi-dz"},
+        {verb: "Wiercić", translation: "Сверлить", forms: ["wiercę", "wiercisz", "wierci", "wiercimy", "wiercicie", "wiercą"], type: "ci-c"},
+        {verb: "Wrócić", translation: "Вернуться", forms: ["wrócę", "wrócisz", "wróci", "wrócimy", "wrócicie", "wrócą"], type: "ci-c"},
+        {verb: "Wzbogacić", translation: "Обогатить", forms: ["wzbogacę", "wzbogacisz", "wzbogaci", "wzbogacimy", "wzbogacicie", "wzbogacą"], type: "ci-c"},
+        {verb: "Zlecić", translation: "Задать,поручать", forms: ["zlecę", "zlecisz", "zleci", "zlecimy", "zleciecie", "zlecą"], type: "ci-c"}
+        ];
+
+        function createQuestionSection(formId, verbList) {
+            var form = document.getElementById(formId);
+            verbList.forEach(function(verbObj, index) {
+                var questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                var questionP = document.createElement('p');
+                questionP.textContent = (index + 1) + '. ' + verbObj.verb + ' (' + verbObj.translation + '):';
+                questionDiv.appendChild(questionP);
+
+                var pronouns = ["Ja", "Ty", "On/ona/ono", "My", "Wy", "Oni/one"];
+                pronouns.forEach(function(pronoun, i) {
+                    questionDiv.innerHTML += pronoun + ' <input type="text" data-answer="' + verbObj.forms[i] + '">. ';
+                });
+
+                let button = document.createElement("button");
+                button.textContent = "Check";
+                button.type = "button";
+                button.classList.add("check-answer");
+                button.addEventListener("click", (e) => {
+                    questionDiv.querySelectorAll("input").forEach((input) => {
+                        if (input.value.toLowerCase() === input.dataset.answer.toLowerCase()) {
+                            input.className = 'correct';
+                            input.value += ' ✔️';
+                        } else {
+                            input.className = 'incorrect';
+                            input.value += ' ❌';
+                        }
+                    })
+                });
+                let br = document.createElement("br");
+                questionDiv.append(br, button);
+
+                form.appendChild(questionDiv);
+            });
+        }
+
+        var ciCVerbs = verbs.filter(v => v.type === "ci-c");
+        var dziDzVerbs = verbs.filter(v => v.type === "dzi-dz");
+
+        createQuestionSection("ci-c-verbs", ciCVerbs);
+        createQuestionSection("dzi-dz-verbs", dziDzVerbs);
+
+        var inputs = document.querySelectorAll('input');
+        inputs.forEach(function(input) {
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    if (this.value.toLowerCase() === this.dataset.answer.toLowerCase()) {
+                        this.className = 'correct';
+                        this.value += ' ✔️';
+                    } else {
+                        this.className = 'incorrect';
+                        this.value += ' ❌';
+                    }
+                }
+            });
+        });
+    </script>
+    <h2 style="font-size: 1.5em; margin: 100px 0;">
+        <a href="group6.html">Вернитесь в меню группы VI.</a>
+    </h2>
+    <h2 style="font-size: 1.5em; margin: 100px 0;">
+        <a href="index.html">Вернитесь на главную страницу.</a>
+    </h2>
+</body>
+</html>

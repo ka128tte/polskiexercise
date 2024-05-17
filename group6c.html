@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>Polskie czasowniki - Grupa VIc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+        }
+        .correct {
+            color: darkgreen;
+            background-color: lightgreen;
+        }
+        .incorrect {
+            color: darkred;
+            background-color: lightcoral;
+            text-decoration: line-through;
+        }
+        input[type="text"] {
+            width: 100px;
+        }
+        .question p {
+            font-size: 1.5em;
+            margin-top: 100px;
+        }
+        button.check-answer {
+            font: "Open Sans", sans-serif;
+            text-transform: uppercase;
+            border-radius: 7px;
+            border: none;
+            color: white;
+            background-color: rgb(59, 121, 80);
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+        @media screen and (min-width: 800px) {
+            button.check-answer {
+                display: none;
+            }
+        }
+        .section {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polskie czasowniki - Grupa VIc</h1>
+    <div class="section">
+        <h2>Ści/Szcz</h2>
+        <form id="sci-szcz-verbs">
+            <!-- Questions will be inserted here by JavaScript -->
+        </form>
+    </div>
+    <div class="section">
+        <h2>Ździ/Żdż</h2>
+        <form id="zdzi-zdz-verbs">
+            <!-- Questions will be inserted here by JavaScript -->
+        </form>
+    </div>
+
+    <script>
+        var verbs = [
+            {verb: "Bezcześcić", translation: "Богохулить", forms: ["bezczeszczę", "bezcześcisz", "bezcześci", "bezcześcimy", "bezcześcicie", "bezczeszczą"], type: "sci-szcz"},
+        {verb: "Czyścić", translation: "Чистить", forms: ["czyszczę", "czyścisz", "czyści", "czyścimy", "czyścicie", "czyszczą"], type: "sci-szcz"},
+        {verb: "Gnieździć się", translation: "Гнездиться", forms: ["gnieżdżę się", "gnieździsz się", "gnieździ się", "gnieździimy się", "gnieździcie się", "gnieżdżą się"], type: "zdzi-zdz"},
+        {verb: "Gościć", translation: "Принимать гостей, гостить кого-то", forms: ["goszczę", "gościsz", "gości", "gościmy", "gościcie", "goszczą"], type: "sci-szcz"},
+{verb: "Jeździć", translation: "Ездить", forms: ["jeżdżę", "jeździsz", "jeździ", "jeździmy", "jeździcie", "jeżdżą"], type: "zdzi-zdz"},
+        {verb: "Mieścić", translation: "Вмещать", forms: ["mieszczę", "mieścisz", "mieści", "mieścimy", "mieścicie", "mieszczą"], type: "sci-szcz"},
+        {verb: "Namaścić", translation: "Намазать, помазать", forms: ["namaszczę", "namaścisz", "namaści", "namaścimy", "namaścicie", "namaszczą"], type: "sci-szcz"},
+        {verb: "Natłuścić", translation: "Намазать маслом, смазать", forms: ["natłuszczę", "natłuścisz", "natłuści", "natłuścimy", "natłuścicie", "natłuszczą"], type: "sci-szcz"},
+        {verb: "Obwieścić", translation: "Объявить, оповестить", forms: ["obwieszczę", "obwieszczasz", "obwieszcza", "obwieszczszczęy", "obwieszczacie", "obwieszczają"], type: "sci-szcz"},
+        {verb: "Odpuścić", translation: "Простить", forms: ["odpuszczę", "odpuścisz", "odpuści", "odpuścimy", "odpuścicie", "odpuszczą"], type: "sci-szcz"},
+        {verb: "Pieścić", translation: "Ласкать", forms: ["pieszczę", "pieścisz", "pieści", "pieścimy", "pieścicie", "pieszczą"], type: "sci-szcz"},
+        {verb: "Pościć", translation: "Поститься", forms: ["poszczę", "pościsz", "pości", "pościmy", "pościcie", "poszczą"], type: "sci-szcz"},
+        {verb: "Przepuścić", translation: "Пропустить", forms: ["przepuszczę", "przepuścisz", "przepuści", "przepuścimy", "przepuścicie", "przepuszczą"], type: "sci-szcz"},
+        {verb: "Przygwoździć", translation: "Пригвоздить", forms: ["przygwożdżę", "przygwoździsz", "przygwoździ", "przygwoździmy", "przygwoździcie", "przygwożdżą"], type: "zdzi-zdz"},
+        {verb: "Puścić", translation: "Пустить", forms: ["puszczę", "puścisz", "puści", "puścimy", "puścicie", "puszczą"], type: "sci-szcz"},
+        {verb: "Rozgwieździć", translation: "Распылиться звездами", forms: ["rozgwieżdżę", "rozgwieździsz", "rozgwieździ", "rozgwieździmy", "rozgwieździcie", "rozgwieżdżą"], type: "zdzi-zdz"},
+        {verb: "Rozzłościć", translation: "Разозлить", forms: ["rozzłoszczę", "rozzłościsz", "rozzłości", "rozzłościmy", "rozzłościcie", "rozzłoszczą"], type: "sci-szcz"},
+        {verb: "Szeleścić", translation: "Шелестеть", forms: ["szeleszczę", "szeleścisz", "szeleści", "szeleścimy", "szeleścicie", "szeleszczą"], type: "sci-szcz"},
+        {verb: "Umieścić", translation: "Поместить", forms: ["umieszczę", "umieszczasz", "umieści", "umieścimy", "umieszczacie", "umieszczą"], type: "sci-szcz"},
+        {verb: "Uprościć", translation: "Упростить", forms: ["uproszczę", "uprościsz", "uprości", "uprościmy", "uprościcie", "uproszczą"], type: "sci-szcz"},
+        {verb: "Zazdrościć", translation: "Завидовать", forms: ["zazdroszczę", "zazdrościsz", "zazdrości", "zazdrościmy", "zazdrościcie", "zazdroszczą"], type: "sci-szcz"},
+        {verb: "Złościć", translation: "Злить", forms: ["złoszczę", "złościsz", "złości", "złościmy", "złościcie", "złoszczą"], type: "sci-szcz"},
+        ];
+
+        function createQuestionSection(formId, verbList) {
+            var form = document.getElementById(formId);
+            verbList.forEach(function(verbObj, index) {
+                var questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                var questionP = document.createElement('p');
+                questionP.textContent = (index + 1) + '. ' + verbObj.verb + ' (' + verbObj.translation + '):';
+                questionDiv.appendChild(questionP);
+
+                var pronouns = ["Ja", "Ty", "On/ona/ono", "My", "Wy", "Oni/one"];
+                pronouns.forEach(function(pronoun, i) {
+                    questionDiv.innerHTML += pronoun + ' <input type="text" data-answer="' + verbObj.forms[i] + '">. ';
+                });
+
+                let button = document.createElement("button");
+                button.textContent = "Check";
+                button.type = "button";
+                button.classList.add("check-answer");
+                button.addEventListener("click", (e) => {
+                    questionDiv.querySelectorAll("input").forEach((input) => {
+                        if (input.value.toLowerCase() === input.dataset.answer.toLowerCase()) {
+                            input.className = 'correct';
+                            input.value += ' ✔️';
+                        } else {
+                            input.className = 'incorrect';
+                            input.value += ' ❌';
+                        }
+                    })
+                });
+                let br = document.createElement("br");
+                questionDiv.append(br, button);
+
+                form.appendChild(questionDiv);
+            });
+        }
+
+        var sciSzczVerbs = verbs.filter(v => v.type === "sci-szcz");
+        var zdziZdzVerbs = verbs.filter(v => v.type === "zdzi-zdz");
+
+        createQuestionSection("sci-szcz-verbs", sciSzczVerbs);
+        createQuestionSection("zdzi-zdz-verbs", zdziZdzVerbs);
+
+        var inputs = document.querySelectorAll('input');
+        inputs.forEach(function(input) {
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    if (this.value.toLowerCase() === this.dataset.answer.toLowerCase()) {
+                        this.className = 'correct';
+                        this.value += ' ✔️';
+                    } else {
+                        this.className = 'incorrect';
+                        this.value += ' ❌';
+                    }
+                }
+            });
+        });
+    </script>
+    <h2 style="font-size: 1.5em; margin: 100px 0;">
+        <a href="group6.html">Вернитесь в меню группы VI.</a>
+    </h2>
+    <h2 style="font-size: 1.5em; margin: 100px 0;">
+        <a href="index.html">Вернитесь на главную страницу.</a>
+    </h2>
+</body>
+</html>
