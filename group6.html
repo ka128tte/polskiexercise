@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Polskie czasowniki - Grupa VI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        @keyframes twinkle {
+            0% {opacity: 1;}
+            50% {opacity: 0.5;}
+            100% {opacity: 1;}
+        }
+        body, p, .panel-heading, .panel-body {
+            font-family: 'Nunito', sans-serif;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: purple;
+            animation: twinkle 2s infinite;
+        }
+        p {
+            text-align: center;
+            font-size: 1.5em;
+        }
+        .panel-default > .panel-heading-custom {
+            text-align: center;
+            background: #FFA500; /* Orange */
+            color: #ffffff;
+        }
+        .panel-heading:hover {
+            color: #FF4500; /* OrangeRed */
+        }
+        .panel-heading-sub:hover {
+            color: #FF8C00; /* DarkOrange */
+        }
+        .panel-body {
+            display: none;
+            text-align: center;
+            background-color: #FFD700; /* Gold */
+        }
+        .panel-heading-sub {
+            text-align: center;
+            background-color: #FF6347; /* Tomato */
+        }
+        .panel-body-sub {
+            display: none;
+            text-align: center;
+            background-color: #FFB6C1; /* LightPink */
+        }
+    </style>
+</head>
+<body>
+    <h1>Polskie czasowniki - grupa VI</h1>
+    <p>Выберите подгруппу, которую вы хотите тренировать.</p>
+    <div class="container">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading panel-heading-custom">Группа VI</div>
+                <div class="panel-body">
+                    <a href="group6a.html">Группа VIa - si/sz, zi/ż</a><br>
+                    <a href="group6b.html">Группа VIb - ci/c, dzi/dz</a><br>
+                    <a href="group6c.html">Группа VIc - ści/szcz, ździ/żdż</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $(".panel-heading, .panel-heading-sub").click(function(){
+                $(this).next(".panel-body, .panel-body-sub").slideToggle();
+            });
+        });
+    </script>
+</body>
+</html>
