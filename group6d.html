@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>Polskie czasowniki - Grupa V</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+        }
+        .correct {
+            color: darkgreen;
+            background-color: lightgreen;
+        }
+        .incorrect {
+            color: darkred;
+            background-color: lightcoral;
+            text-decoration: line-through;
+        }
+        input[type="text"] {
+            width: 100px;
+        }
+        .question p {
+            font-size: 1.5em;
+			margin-top: 100px
+		}
+
+        button.check-answer {
+            font: "Open Sans", sans-serif;
+            text-transform: uppercase;
+            border-radius: 7px;
+            border: none;
+            color: white;
+            background-color: rgb(59, 121, 80);
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+
+
+        @media screen and (min-width: 800px) {
+            button.check-answer {
+                display: none;
+            }
+        }
+		</style>
+</head>
+<body>
+    <h1>Polskie czasowniki - Grupa V</h1>
+    <form id="cloze-test">
+        <!-- Questions will be inserted here by JavaScript -->
+    </form>
+
+    <script>
+        var verbs = [
+	    	
+{verb: "Biegnąć", translation: "Белеть", forms: ["biegnę", "biegniesz", "biegniee", "biegniemy", "biegniecie", "biegną"]},
+{verb: "Ciągnąć", translation: "Белеть", forms: ["biegnę", "biegniesz", "biegniee", "biegniemy", "biegniecie", "biegną"]},
+{verb: "Biegnąć", translation: "Белеть", forms: ["biegnę", "biegniesz", "biegniee", "biegniemy", "biegniecie", "biegną"]},
+ {verb: "Liznąć", translation: "Белеть", forms: ["biegnę", "biegniesz", "biegniee", "biegniemy", "biegniecie", "biegną"]},       
+	{verb: "Maznąć", translation: "Белеть", forms: ["biegnę", "biegniesz", "biegniee", "biegniemy", "biegniecie", "biegną"]},
+{verb: "Biegnąć", translation: "Белеть", forms: ["biegnę", "biegniesz", "biegniee", "biegniemy", "biegniecie", "biegną"]},
+            // Add the rest of the verbs in the same way
+        ];
+
+    var form = document.getElementById('cloze-test');
+
+    verbs.forEach(function(verbObj, index) {
+        var questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+        var questionP = document.createElement('p');
+        questionP.textContent = (index + 1) + '. ' + verbObj.verb + ' (' + verbObj.translation + '):';
+        questionDiv.appendChild(questionP);
+
+        var pronouns = ["Ja", "Ty", "On/ona/ono", "My", "Wy", "Oni/one"];
+        pronouns.forEach(function(pronoun, i) {
+            questionDiv.innerHTML += pronoun + ' <input type="text" data-answer="' + verbObj.forms[i] + '">. ';
+        });
+
+        let button = document.createElement("button");
+            button.textContent = "Check";
+            button.type = "button";
+            button.classList.add("check-answer");
+            button.addEventListener("click", (e) => {
+                questionDiv.querySelectorAll("input").forEach((input) => {
+                    if (input.value.toLowerCase() === input.dataset.answer.toLowerCase()) {
+                        input.className = 'correct';
+                        input.value += ' ✔️';
+                    } else {
+                        input.className = 'incorrect';
+                        input.value += ' ❌';
+                    }
+                })
+            })
+            let br = document.createElement("br");
+            questionDiv.append(br, button);
+
+        form.appendChild(questionDiv);
+    });
+
+    var inputs = document.querySelectorAll('#cloze-test input');
+    inputs.forEach(function(input) {
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                var userAnswer = this.value.toLowerCase();
+                var correctAnswers = this.dataset.answer.toLowerCase().split('|');
+                if (correctAnswers.includes(userAnswer)) {
+                    this.className = 'correct';
+                    this.value += ' ✔️';
+                } else {
+                    this.className = 'incorrect';
+                    this.value += ' ❌';
+                }
+            }
+        });
+    });
+</script>
+    </script>
+	<h2 style="font-size: 1.5em; margin: 100px 0;">
+	<a href="index.html";>Вернитесь на главную страницу.</a>
+	</h2>
+</body>
+</html>
