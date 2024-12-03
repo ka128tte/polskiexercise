@@ -126,104 +126,115 @@
 			{noun: "Koszulka", translation: "Футболка", accusative: "koszulkę"},
 			{noun: "Wrona", translation: "Ворона", accusative: "wronę"},
 			{noun: "Łasica", translation: "Ласка", accusative: "łasicę"},
-			{noun: "Opcja", translation: "Опция", accusative: "opcję"}
+			{noun: "Skóra", translation: "Кожа", accusative: "skórę"},
+			{noun: "Opcja", translation: "Опция", accusative: "opcję"},
+			{noun: "Porcja", translation: "Порция", accusative: "porcję"},
+			{noun: "Akcja", translation: "Акция", accusative: "akcję"},
+			{noun: "Lekcja", translation: "Урок", accusative: "lekcję"},
+			{noun: "Emocja", translation: "Эмоция", accusative: "emocję"},
+			{noun: "Frustracja", translation: "Фрустрация", accusative: "frustrację"},
+			{noun: "Możliwość", translation: "Возможность", accusative: "możliwość"},
+			{noun: "Miłość", translation: "Любовь", accusative: "miłość"},
+			{noun: "Dobroć", translation: "Доброта", accusative: "dobroć"},
+			{noun: "Wysokość", translation: "Высота", accusative: "wysokość"},
+			{noun: "Długość", translation: "Длина", accusative: "długość"},
+			{noun: "Radość", translation: "Радость", accusative: "radość"},
+			{noun: "Złość", translation: "Злость", accusative: "złość"},
+			{noun: "Mądrość", translation: "Мудрость", accusative: "mądrość"},
+			{noun: "Kość", translation: "Кость", accusative: "kość"},
+			{noun: "Żywność", translation: "Продовольствие", accusative: "żywność"}
         ];
+var container = document.getElementById('question-container');
 
-        var container = document.getElementById('question-container');
+    function loadRandomQuestion() {
+        container.innerHTML = ''; // Clear the container
 
-        function loadRandomQuestion() {
-            container.innerHTML = ''; // Clear the container
+        // Pick a random noun
+        var randomIndex = Math.floor(Math.random() * nouns.length);
+        var nounObj = nouns[randomIndex];
 
-            // Pick a random noun
-            var randomIndex = Math.floor(Math.random() * nouns.length);
-            var nounObj = nouns[randomIndex];
+        // Create the question
+        var questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
 
-            // Create the question
-            var questionDiv = document.createElement('div');
-            questionDiv.className = 'question';
+        // Text for the noun and translation
+        var questionP = document.createElement('p');
+        questionP.textContent = nounObj.noun + ' (' + nounObj.translation + ')';
+        questionDiv.appendChild(questionP);
 
-            // Text for the noun and translation
-            var questionP = document.createElement('p');
-            questionP.textContent = nounObj.noun + ' (' + nounObj.translation + ')';
-            questionDiv.appendChild(questionP);
+        // Add input container with "Widzę:" and the input field aligned on the same line
+        var inputContainer = document.createElement('div');
+        inputContainer.classList.add('input-container');
 
-            // Add input container with "Widzę:" and the input field aligned on the same line
-            var inputContainer = document.createElement('div');
-            inputContainer.classList.add('input-container');
+        // Add "Widzę:" to the input container
+        var seeTextP = document.createElement('p');
+        seeTextP.textContent = "Widzę:";
+        inputContainer.appendChild(seeTextP);
 
-            // Add "Widzę:" to the input container
-            var seeTextP = document.createElement('p');
-            seeTextP.textContent = "Widzę:";
-            inputContainer.appendChild(seeTextP);
+        // Input field
+        let input = document.createElement('input');
+        input.type = 'text';
+        input.dataset.answer = nounObj.accusative;
 
-            // Input field
-            let input = document.createElement('input');
-            input.type = 'text';
-            input.dataset.answer = nounObj.accusative;
+        let emojiSpan = document.createElement('span');
+        emojiSpan.classList.add('emoji');
 
-            let emojiSpan = document.createElement('span');
-            emojiSpan.classList.add('emoji');
+        inputContainer.appendChild(input);
+        inputContainer.appendChild(emojiSpan);
+        questionDiv.appendChild(inputContainer);
 
-            inputContainer.appendChild(input);
-            inputContainer.appendChild(emojiSpan);
-            questionDiv.appendChild(inputContainer);
+        // Add Check Button
+        let checkButton = document.createElement("button");
+        checkButton.textContent = "Проверь";
+        checkButton.type = "button";
 
-            // Add Check Button
-            let checkButton = document.createElement("button");
-            checkButton.textContent = "Проверь";
-            checkButton.type = "button";
+        // Add Next Button
+        let nextButton = document.createElement("button");
+        nextButton.textContent = "Дальше";
+        nextButton.type = "button";
+        nextButton.style.marginLeft = "10px";
+        nextButton.addEventListener("click", loadRandomQuestion);
 
-            // Function to check the answer
-            function checkAnswer() {
-                if (input.value.toLowerCase() === input.dataset.answer.toLowerCase()) {
-                    input.className = 'correct';
-                    emojiSpan.textContent = '✔️';
-                } else {
-                    input.className = 'incorrect';
-                    emojiSpan.textContent = '❌';
-                }
+        // Function to check the answer
+        function checkAnswer() {
+            if (input.value.toLowerCase() === input.dataset.answer.toLowerCase()) {
+                input.className = 'correct';
+                emojiSpan.textContent = '✔️';
+                input.dataset.correct = "true"; // Mark the input as correct
+            } else {
+                input.className = 'incorrect';
+                emojiSpan.textContent = '❌';
+                input.dataset.correct = "false"; // Mark the input as incorrect
             }
-
-            checkButton.addEventListener("click", checkAnswer);
-
-            // Add Next Button
-            let nextButton = document.createElement("button");
-            nextButton.textContent = "Дальше";
-            nextButton.type = "button";
-            nextButton.style.marginLeft = "10px";
-            nextButton.addEventListener("click", loadRandomQuestion);
-
-            // Create a container for the buttons and add the buttons to it
-            var buttonContainer = document.createElement("div");
-            buttonContainer.classList.add('button-container');
-            buttonContainer.appendChild(checkButton);
-            buttonContainer.appendChild(nextButton);
-            questionDiv.appendChild(buttonContainer);
-
-            // Add Enter Key Functionality
-            input.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    checkAnswer();
-                }
-            });
-
-            container.appendChild(questionDiv);
         }
 
-        // Load the first random question
-        loadRandomQuestion();
+        checkButton.addEventListener("click", checkAnswer);
 
-        // Add right arrow key functionality (→) to trigger the "Next" button
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'ArrowRight') {
-                loadRandomQuestion(); // Load the next random question
+        // Create a container for the buttons and add the buttons to it
+        var buttonContainer = document.createElement("div");
+        buttonContainer.classList.add('button-container');
+        buttonContainer.appendChild(checkButton);
+        buttonContainer.appendChild(nextButton);
+        questionDiv.appendChild(buttonContainer);
+
+        // Add Enter Key Functionality
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (input.dataset.correct === "true") {
+                    nextButton.click(); // Trigger the "Next" button if the answer is correct
+                } else {
+                    checkAnswer(); // Check the answer on the first Enter press
+                }
             }
         });
-    </script>
-<h2 style="font-size: 1.5em; margin: 100px 0;">
-        <a href="accusative.html">Вернитесь в меню.</a>
-    </h2>
+
+        container.appendChild(questionDiv);
+    }
+
+    // Load the first random question
+    loadRandomQuestion();
+</script>
     <h2 style="font-size: 1.5em; margin: 100px 0;">
         <a href="index.html";>Вернитесь на главную страницу.</a>
     </h2>

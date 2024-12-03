@@ -1,50 +1,82 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Страница</title>
-    <!-- Link to Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>Celownik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
-        /* Apply Nunito font */
-        body {
+        body, p, .panel-heading, .panel-body {
             font-family: 'Nunito', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f5f5f5;
-            flex-direction: column; /* Added to stack elements vertically */
         }
-
-        /* Styling the text */
         h1 {
-            font-size: 4em; /* Large text size */
             text-align: center;
-            animation: twinkle 1s infinite;
-            margin-bottom: 20px; /* Add some space below the text */
+            font-size: 2.5em;
+            color: #5b31c4;
+            animation: twinkle 2s infinite;
         }
-
-        /* Define the twinkle animation */
-        @keyframes twinkle {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
         p {
-            font-size: 2em; /* Large text size */
             text-align: center;
+            font-size: 1.5em;
+        }
+     .panel-default > .panel-heading-custom {
+text-align: center;
+background: #de673c; /*Medium Orange*/
+color: #ffffff
+
+        }
+        .panel-heading:hover {
+            color: #2b1d6b; /*Purple*/
+        }
+		.panel-heading-sub:hover {
+            color: #008000; /*Green*/
+        }
+        .panel-body {
+            display: none;
+            text-align: center;
+			background-color: #f5b87f; /*Light Orange*/
+        }
+        .panel-heading-sub {
+            text-align: center;
+            background-color: #ba8cba; /*Dark purple*/
+        }
+        .panel-body-sub {
+            display: none;
+            text-align: center;
+			background-color: #e8c1e8; /*Light purple*/
         }
     </style>
 </head>
-
 <body>
-    <h1>Будет добавлено!</h1>
-    <p><a href="index.html">Вернитесь на главную страницу.</a></p>
+<h1>Odmiana w Celowniku</h1>
+<p>Пожалуйста, выберите грамматический род, в котором вы хотите попрактиковаться.</p>
+<div class="container">
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading panel-heading-custom">1. Единственное число</div>
+            <div class="panel-body">
+                <a href="masculinedat.html">1.1 мужской род</a><br>
+                <a href="femininedatloc.html">1.2 женский род</a><br>
+				<a href="neuterdat.html">1.3 средний род</a><br>
+                </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading panel-heading-custom">2. Множественное число</div>
+            <div class="panel-body">
+                <a href="pluraldat.html">Тренируйся</a><br>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        $(document).ready(function(){
+            $(".panel-heading, .panel-heading-sub").click(function(){
+                $(this).next(".panel-body, .panel-body-sub").slideToggle();
+            });
+        });
+    </script>
 </body>
-
 </html>

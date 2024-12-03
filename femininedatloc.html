@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>Celownik/Miejscownik - r. żeński</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+        }
+        .correct {
+            color: darkgreen;
+            background-color: lightgreen;
+        }
+        .incorrect {
+            color: darkred;
+            background-color: lightcoral;
+            text-decoration: line-through;
+        }
+        input[type="text"] {
+            width: 150px;
+        }
+        .question p {
+            font-size: 1.5em;
+            margin: 10px 0; /* Reduced margin to decrease space between elements */
+        }
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .input-wrapper span {
+            margin-left: 8px;
+            font-size: 1.2em;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: row; /* Aligns "Widzę" and the input field on the same line */
+            align-items: center;
+            justify-content: center;
+        }
+        .input-container p {
+            margin-right: 10px; /* Space between "Widzę" and the input */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center; /* Center buttons horizontally */
+            margin-top: 10px; /* Add margin above the buttons */
+        }
+        button {
+            font-family: "Nunito", sans-serif;
+            text-transform: uppercase;
+            border-radius: 7px;
+            border: none;
+            color: white;
+            background-color: rgb(59, 121, 80);
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 0 10px; /* Space between the buttons */
+        }
+    </style>
+</head>
+<body>
+    <h1>Polskie rzeczowniki - Celownik/Miejscownik</h1>
+    <div id="question-container">
+        <!-- Random question will be displayed here -->
+    </div>
+    <script>
+        var nouns = [
+            {noun: "Książka", translation: "Книжка", datloc: "książce"},
+            {noun: "Kobieta", translation: "Женщина", datloc: "kobiecie"},
+            {noun: "Dziewczyna", translation: "Девушка", datloc: "dziewczynie"},
+            {noun: "Rzeka", translation: "Река", datloc: "rzece"},
+            {noun: "Lampa", translation: "Лампа", datloc: "lampie"},
+			{noun: "Mama", translation: "Мама", datloc: "mamie" },
+			{noun: "Siostra", translation: "Сестра", datloc: "siostrze"},
+			{noun: "Koleżanka", translation: "Подруга", datloc: "koleżance"},
+			{noun: "Sukienka", translation: "Платье", datloc: "sukience"},
+			{noun: "Córka", translation: "Дочь", datloc: "córce"},
+			{noun: "Kawa", translation: "Кофе", datloc: "kawie"},
+			{noun: "Torebka", translation: "Сумка", datloc: "torebce"},
+			{noun: "Zupa", translation: "Суп", datloc: "zupie"},
+			{noun: "Żaba", translation: "Лягушка", datloc: "żabie"},
+			{noun: "Ryba", translation: "Рыба", datloc: "rybie"},
+			{noun: "Ściana", translation: "Стена", datloc: "ścianie"},
+			{noun: "Poduszka", translation: "Подушка", datloc: "poduszce"},
+			{noun: "Wieża", translation: "Башня", datloc: "wieży"},
+			{noun: "Szafka", translation: "Шкафчик", datloc: "szafce"},
+			{noun: "Woda", translation: "Вода", datloc: "wodzie"},
+			{noun: "Bułka", translation: "Булка", datloc: "bułce"},
+			{noun: "Pracowniczka", translation: "Работница", datloc: "pracowniczce"},
+			{noun: "Łyżka", translation: "Ложка", datloc: "łyżce"},
+			{noun: "Myszka", translation: "Мышка", datloc: "myszce"},
+			{noun: "Owca", translation: "Овца", datloc: "owcy"},
+			{noun: "Krowa", translation: "Корова", datloc: "krowie"},
+			{noun: "Kura", translation: "Курица", datloc: "kurze"},
+			{noun: "Noga", translation: "Нога", datloc: "nodze"},
+			{noun: "Babcia", translation: "Бабушка", datloc: "babci"},
+			{noun: "Ciocia", translation: "Тётя", datloc: "cioci"},
+			{noun: "Nauczycielka", translation: "Учительница", datloc: "nauczycielce"},
+			{noun: "Sarna", translation: "Косуля", datloc: "sarnie"},
+			{noun: "Kaczka", translation: "Утка", datloc: "kaczce"},
+			{noun: "Kołdra", translation: "Одеяло", datloc: "kołdrze"},
+			{noun: "Szuflada", translation: "Ящик", datloc: "szufladzie"},
+			{noun: "Podłoga", translation: "Пол", datloc: "podłodze"},
+			{noun: "Tapeta", translation: "Обои", datloc: "tapecie"},
+			{noun: "Kanapa", translation: "Диван", datloc: "kanapie"},
+			{noun: "Półka", translation: "Полка", datloc: "półce"},
+			{noun: "Głowa", translation: "Голова", datloc: "głowie"},
+			{noun: "Kuchnia", translation: "Кухня", datloc: "kuchni"},
+			{noun: "Sypialnia", translation: "Спальня", datloc: "sypialni"},
+			{noun: "Łazienka", translation: "Ванная", datloc: "łazience"},
+			{noun: "Wełna", translation: "Шерсть", datloc: "wełnie"},
+			{noun: "Ropucha", translation: "Жаба", datloc: "ropusze"},
+			{noun: "Jaszczurka", translation: "Ящерица", datloc: "jaszczurce"},
+			{noun: "Żmija", translation: "Гадюка", datloc: "żmii"},
+			{noun: "Wiewiórka", translation: "Белка", datloc: "wiewiórce"},
+			{noun: "Skrzynia", translation: "Ящик", datloc: "skrzyni"},
+			{noun: "Bawełna", translation: "Хлопок", datloc: "bawełnie"},
+			{noun: "Mucha", translation: "Муха", datloc: "musze"},
+			{noun: "Czapka", translation: "Шапка", datloc: "czapce"},
+			{noun: "Skarpetka", translation: "Носок", datloc: "skarpetce"},
+			{noun: "Koszulka", translation: "Футболка", datloc: "koszulce"},
+			{noun: "Wrona", translation: "Ворона", datloc: "wronie"},
+			{noun: "Łasica", translation: "Ласка", datloc: "łasicy"},
+			{noun: "Skóra", translation: "Кожа", datloc: "skórze"},
+			{noun: "Opcja", translation: "Опция", datloc: "opcji"},
+			{noun: "Porcja", translation: "Порция", datloc: "porcji"},
+			{noun: "Akcja", translation: "Акция", datloc: "akcji"},
+			{noun: "Lekcja", translation: "Урок", datloc: "lekcji"},
+			{noun: "Emocja", translation: "Эмоция", datloc: "emocji"},
+			{noun: "Frustracja", translation: "Фрустрация", datloc: "frustracji"},
+			{noun: "Możliwość", translation: "Возможность", datloc: "możliwości"},
+			{noun: "Miłość", translation: "Любовь", datloc: "miłości"},
+			{noun: "Dobroć", translation: "Доброта", datloc: "dobroci"},
+			{noun: "Wysokość", translation: "Высота", datloc: "wysokości"},
+			{noun: "Długość", translation: "Длина", datloc: "długości"},
+			{noun: "Radość", translation: "Радость", datloc: "radości"},
+			{noun: "Złość", translation: "Злость", datloc: "złości"},
+			{noun: "Mądrość", translation: "Мудрость", datloc: "mądrości"},
+			{noun: "Kość", translation: "Кость", datloc: "kości"},
+			{noun: "Żywność", translation: "Продовольствие", datloc: "żywności"}
+        ];
+
+var container = document.getElementById('question-container');
+
+    function loadRandomQuestion() {
+        container.innerHTML = ''; // Clear the container
+
+        // Pick a random noun
+        var randomIndex = Math.floor(Math.random() * nouns.length);
+        var nounObj = nouns[randomIndex];
+
+        // Create the question
+        var questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+
+        // Text for the noun and translation
+        var questionP = document.createElement('p');
+        questionP.textContent = nounObj.noun + ' (' + nounObj.translation + ')';
+        questionDiv.appendChild(questionP);
+
+        // Add input container with "Dziękuję / Na:" and the input field aligned on the same line
+        var inputContainer = document.createElement('div');
+        inputContainer.classList.add('input-container');
+
+        // Add "Widzę:" to the input container
+        var seeTextP = document.createElement('p');
+        seeTextP.textContent = "Dziękuję / Na:";
+        inputContainer.appendChild(seeTextP);
+
+        // Input field
+        let input = document.createElement('input');
+        input.type = 'text';
+        input.dataset.answer = nounObj.datloc;
+
+        let emojiSpan = document.createElement('span');
+        emojiSpan.classList.add('emoji');
+
+        inputContainer.appendChild(input);
+        inputContainer.appendChild(emojiSpan);
+        questionDiv.appendChild(inputContainer);
+
+        // Add Check Button
+        let checkButton = document.createElement("button");
+        checkButton.textContent = "Проверь";
+        checkButton.type = "button";
+
+        // Add Next Button
+        let nextButton = document.createElement("button");
+        nextButton.textContent = "Дальше";
+        nextButton.type = "button";
+        nextButton.style.marginLeft = "10px";
+        nextButton.addEventListener("click", loadRandomQuestion);
+
+        // Function to check the answer
+        function checkAnswer() {
+            if (input.value.toLowerCase() === input.dataset.answer.toLowerCase()) {
+                input.className = 'correct';
+                emojiSpan.textContent = '✔️';
+                input.dataset.correct = "true"; // Mark the input as correct
+            } else {
+                input.className = 'incorrect';
+                emojiSpan.textContent = '❌';
+                input.dataset.correct = "false"; // Mark the input as incorrect
+            }
+        }
+
+        checkButton.addEventListener("click", checkAnswer);
+
+        // Create a container for the buttons and add the buttons to it
+        var buttonContainer = document.createElement("div");
+        buttonContainer.classList.add('button-container');
+        buttonContainer.appendChild(checkButton);
+        buttonContainer.appendChild(nextButton);
+        questionDiv.appendChild(buttonContainer);
+
+        // Add Enter Key Functionality
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (input.dataset.correct === "true") {
+                    nextButton.click(); // Trigger the "Next" button if the answer is correct
+                } else {
+                    checkAnswer(); // Check the answer on the first Enter press
+                }
+            }
+        });
+
+        container.appendChild(questionDiv);
+    }
+
+    // Load the first random question
+    loadRandomQuestion();
+</script>
+    <h2 style="font-size: 1.5em; margin: 100px 0;">
+        <a href="index.html";>Вернитесь на главную страницу.</a>
+    </h2>
+</body>
+</html>
