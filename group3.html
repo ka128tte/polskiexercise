@@ -19,42 +19,59 @@
             background-color: lightcoral;
             text-decoration: line-through;
         }
-        input[type="text"] {
-            width: 100px;
-        }
         .question p {
             font-size: 1.5em;
-			margin-top: 100px
-		}
-
-        button.check-answer {
-            font: "Open Sans", sans-serif;
+            margin-top: 50px;
+        }
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+        input {
+            text-align: center;
+            width: 120px;
+            height: 30px;
+            font-size: 1em;
+        }
+        .emoji {
+            font-size: 1.2em;
+            width: 20px;
+            text-align: center;
+            display: inline-block;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 1em;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+			font-family: "Nunito", sans-serif;
             text-transform: uppercase;
             border-radius: 7px;
             border: none;
             color: white;
             background-color: rgb(59, 121, 80);
-            padding: 5px 10px;
-            margin-top: 10px;
         }
-
-
-        @media screen and (min-width: 800px) {
-            button.check-answer {
-                display: none;
-            }
-        }
-		</style>
+    </style>
 </head>
 <body>
     <h1>Polskie czasowniki - Grupa III</h1>
-    <form id="cloze-test">
-        <!-- Questions will be inserted here by JavaScript -->
-    </form>
-
+    <form id="cloze-test"></form>
+    <div class="button-container">
+        <button class="check-button" onclick="checkAnswers()">Проверь</button>
+        <button class="next-button" onclick="loadNewVerb()">Дальше</button>
+    </div>
+    
     <script>
         var verbs = [
-	    	
 {verb: "Bieleć", translation: "Белеть", forms: ["bieleję", "bielejesz", "bieleje", "bielejemy", "bielejecie", "bieleją"]},
         {verb: "Błękitnieć", translation: "Голубеть", forms: ["błękitnieję", "błękitniejesz", "błękitnieje", "błękitniejemy", "błękitniejecie", "błękitnieją"]},
 		{verb: "Brązowieć", translation: "Коричневеть", forms: ["brązowieję", "brązowiejesz", "brązowieje", "brązowiejemy", "brązowiejecie", "brązowieją"]},
@@ -106,65 +123,86 @@
 		{verb: "Zielenieć", translation: "Зеленеть", forms: ["zielenieję", "zieleniejesz", "zielenieje", "zieleniejemy", "zieleniejecie", "zielenieją"]},
 		{verb: "Żółknieć, żółcieć", translation: "Желтеть", forms: ["żółknieję|żółcieję", "żółkniejesz|żółciejesz", "żółknieje|żółcieje", "żółkniejemy|żółciejemy", "żółkniejecie|żółciejecie", "żółknieją|żółcieją"]},
 
-            // Add the rest of the verbs in the same way
         ];
-
-    var form = document.getElementById('cloze-test');
-
-    verbs.forEach(function(verbObj, index) {
-        var questionDiv = document.createElement('div');
-        questionDiv.className = 'question';
-        var questionP = document.createElement('p');
-        questionP.textContent = (index + 1) + '. ' + verbObj.verb + ' (' + verbObj.translation + '):';
-        questionDiv.appendChild(questionP);
-
-        var pronouns = ["Ja", "Ty", "On/ona/ono", "My", "Wy", "Oni/one"];
-        pronouns.forEach(function(pronoun, i) {
-            questionDiv.innerHTML += pronoun + ' <input type="text" data-answer="' + verbObj.forms[i] + '">. ';
-        });
-
-        let button = document.createElement("button");
-            button.textContent = "Check";
-            button.type = "button";
-            button.classList.add("check-answer");
-            button.addEventListener("click", (e) => {
-                questionDiv.querySelectorAll("input").forEach((input) => {
-                    if (input.value.toLowerCase() === input.dataset.answer.toLowerCase()) {
-                        input.className = 'correct';
-                        input.value += ' ✔️';
-                    } else {
-                        input.className = 'incorrect';
-                        input.value += ' ❌';
-                    }
-                })
-            })
-            let br = document.createElement("br");
-            questionDiv.append(br, button);
-
-        form.appendChild(questionDiv);
-    });
-
-    var inputs = document.querySelectorAll('#cloze-test input');
-    inputs.forEach(function(input) {
-        input.addEventListener('keydown', function(event) {
+        
+        var form = document.getElementById('cloze-test');
+        var currentVerb = null;
+        
+        function loadNewVerb() {
+            form.innerHTML = "";
+            currentVerb = verbs[Math.floor(Math.random() * verbs.length)];
+            
+            var questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            
+            var questionP = document.createElement('p');
+            questionP.textContent = currentVerb.verb + ' (' + currentVerb.translation + '):';
+            questionDiv.appendChild(questionP);
+            
+            var pronouns = ["Ja", "Ty", "On/ona/ono", "My", "Wy", "Oni/one"];
+            pronouns.forEach(function(pronoun, i) {
+                let wrapper = document.createElement('div');
+                wrapper.classList.add('input-wrapper');
+                
+                let pronounSpan = document.createElement('span');
+                pronounSpan.textContent = pronoun;
+                pronounSpan.style.width = "80px";
+                pronounSpan.style.textAlign = "right";
+                
+                let inputField = document.createElement('input');
+                inputField.type = 'text';
+                inputField.dataset.answer = currentVerb.forms[i];
+                
+                let emojiSpan = document.createElement('span');
+                emojiSpan.classList.add('emoji');
+                
+                wrapper.appendChild(pronounSpan);
+                wrapper.appendChild(inputField);
+                wrapper.appendChild(emojiSpan);
+                questionDiv.appendChild(wrapper);
+            });
+            
+            form.appendChild(questionDiv);
+        }
+        
+        function checkAnswers() {
+            let inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                let emojiSpan = input.nextElementSibling;
+                let correctAnswer = input.dataset.answer.toLowerCase();
+                if (input.value.toLowerCase() === correctAnswer) {
+                    input.className = 'correct';
+                    emojiSpan.textContent = '✔️';
+                } else {
+                    input.className = 'incorrect';
+                    emojiSpan.textContent = '❌';
+                }
+            });
+        }
+        
+        document.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                var userAnswer = this.value.toLowerCase();
-                var correctAnswers = this.dataset.answer.toLowerCase().split('|');
-                if (correctAnswers.includes(userAnswer)) {
-                    this.className = 'correct';
-                    this.value += ' ✔️';
-                } else {
-                    this.className = 'incorrect';
-                    this.value += ' ❌';
+                let inputs = document.querySelectorAll('input');
+                for (let input of inputs) {
+                    if (!input.classList.contains('correct')) {
+                        let emojiSpan = input.nextElementSibling;
+                        let correctAnswer = input.dataset.answer.toLowerCase();
+                        if (input.value.toLowerCase() === correctAnswer) {
+                            input.className = 'correct';
+                            emojiSpan.textContent = '✔️';
+                        } else {
+                            input.className = 'incorrect';
+                            emojiSpan.textContent = '❌';
+                        }
+                        return;
+                    }
                 }
+                loadNewVerb();
             }
         });
-    });
-</script>
+        
+        loadNewVerb();
     </script>
-	<h2 style="font-size: 1.5em; margin: 100px 0;">
-	<a href="index.html";>Вернитесь на главную страницу.</a>
-	</h2>
 </body>
 </html>
