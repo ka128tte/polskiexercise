@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>Celownik - r. męski</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+        }
+        .correct {
+            color: darkgreen;
+            background-color: lightgreen;
+        }
+        .incorrect {
+            color: darkred;
+            background-color: lightcoral;
+            text-decoration: line-through;
+        }
+        input[type="text"] {
+            width: 150px;
+        }
+        .question p {
+            font-size: 1.5em;
+            margin: 10px 0; /* Reduced margin to decrease space between elements */
+        }
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .input-wrapper span {
+            margin-left: 8px;
+            font-size: 1.2em;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: row; /* Aligns "Widzę" and the input field on the same line */
+            align-items: center;
+            justify-content: center;
+        }
+        .input-container p {
+            margin-right: 10px; /* Space between "Widzę" and the input */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center; /* Center buttons horizontally */
+            margin-top: 10px; /* Add margin above the buttons */
+        }
+        button {
+            font-family: "Nunito", sans-serif;
+            text-transform: uppercase;
+            border-radius: 7px;
+            border: none;
+            color: white;
+            background-color: rgb(59, 121, 80);
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 0 10px; /* Space between the buttons */
+        }
+    </style>
+</head>
+<body>
+    <h1>Polskie rzeczowniki - Celownik</h1>
+    <div id="question-container">
+        <!-- Random question will be displayed here -->
+    </div>
+    <script>
+        var nouns = [
+    {noun: "Kot", translation: "Кот", dat: ["kotu]},
+    {noun: "Lew", translation: "Лев", dat: ["lwu"]},
+    {noun: "Tygrys", translation: "Тигр", dat: ["tygrysowi"]},
+    {noun: "Żbik", translation: "Лесной кот, дикий кот", dat: ["żbikowi"]},
+    {noun: "Bóbr", translation: "Бобр", dat: ["bobrowi"]},
+    {noun: "Łoś", translation: "Лось", dat: ["łosiowi"]},
+    {noun: "Struś", translation: "Страус", dat: ["strusiowi"]},
+    {noun: "Ryś", translation: "Рысь", dat: ["rysiowi"]},
+    {noun: "Koń", translation: "Лошадь, конь", dat: ["koniowi"]},
+    {noun: "Karaś", translation: "Карась", dat: ["karasiowi"]},
+    {noun: "Wół", translation: "Вол", dat: ["wołowi"]},
+    {noun: "Byk", translation: "Бык", dat: ["bykowi"]},
+    {noun: "Baran", translation: "Баран", dat: ["baranowi"]},
+    {noun: "Jeleń", translation: "Олень", dat: ["jeleniowi"]},
+    {noun: "Kozioł", translation: "Козёл", dat: ["kozłowi"]},
+    {noun: "Osioł", translation: "Осел", dat: ["osłu", "osłowi"]},
+    {noun: "Słoń", translation: "Слон", dat: ["słoniu"]},
+    {noun: "Wielbłąd", translation: "Верблюд", dat: ["wielbłądowi"]},
+    {noun: "Owad", translation: "Насекомое", dat: ["owadowi"]},
+    {noun: "Pająk", translation: "Паук", dat: ["pająkowi"]},
+    {noun: "Motyl", translation: "Бабочка", dat: ["motylowi"]},
+    {noun: "Komar", translation: "Комар", dat: ["komarowi"]},
+	{noun: "Brat", translation: "Брат", dat: ["bratu"]},
+	{noun: "Chłopiec", translation: "Мальчик", dat: ["chłopcu"]},
+	{noun: "Diabeł", translation: "Дьявол,чёрт", dat: ["diabłu"]},
+	{noun: "Ojciec", translation: "Отец", dat: ["ojcu"]},
+	{noun: "Ksiądz", translation: "Священник", dat: ["księdzu"]},
+	{noun: "Świat", translation: "Мир", dat: ["światu"]},
+	{noun: "Pan", translation: "Господин", dat: ["panu"]},
+    {noun: "Kran", translation: "Кран", dat: ["kranowi"]},
+    {noun: "Miód", translation: "Мёд", dat: ["miodowi"]},
+    {noun: "Pomidor", translation: "Помидор", dat: ["pomidorowi"]},
+    {noun: "Olej", translation: "Масло", dat: ["olejowi"]},
+    {noun: "Czosnek", translation: "Чеснок", dat: ["czosnkowi"]},
+    {noun: "Chleb", translation: "Хлеб", dat: ["chlebowi"]},
+    {noun: "Agrest", translation: "Крыжовник", dat: ["agrestowi"]},
+    {noun: "Łosoś", translation: "Лосось", dat: ["łososiowi"]},
+    {noun: "Obraz", translation: "Картина", dat: ["obrazowi"]},
+    {noun: "Fotel", translation: "Кресло", dat: ["fotelowi"]},
+    {noun: "Szalik", translation: "Шарф", dat: ["szalikowi"]},
+    {noun: "Klucz", translation: "Ключ", dat: ["kluczowi"]},
+    {noun: "Banan", translation: "Банан", dat: ["bananowi"]},
+    {noun: "Ogórek", translation: "Огурец", dat: ["ogórkowi"]},
+    {noun: "Pies", translation: "Собака", dat: ["psu"]},
+    {noun: "Stół", translation: "Стол", dat: ["stołowi"]},
+    {noun: "Koc", translation: "Одеяло", dat: ["kocowi"]},
+    {noun: "Nos", translation: "Нос", dat: ["nosowi"]},
+    {noun: "Test", translation: "Тест", dat: ["testowi"]},
+    {noun: "Egzamin", translation: "Экзамен", dat: ["egzaminowi"]},
+    {noun: "Wróg", translation: "Враг", dat: ["wrogowi"]},
+    {noun: "Bóg", translation: "Бог", dat: ["Bogu"]},
+    {noun: "Mężczyzna", translation: "Мужчина", dat: ["mężczyźnie"]},
+    {noun: "Chłopak", translation: "Парень", dat: ["chłopakowi"]},
+    {noun: "Sąsiad", translation: "Сосед", dat: ["sąsiadowi"]},
+    {noun: "Programista", translation: "Программист", dat: ["programiście"]},
+    {noun: "Organista", translation: "Органист", dat: ["organiście"]},
+    {noun: "Komunista", translation: "Коммунист", dat: ["komuniście"]},
+    {noun: "Maszynista", translation: "Машинист", dat: ["maszyniście"]},
+    {noun: "Egoista", translation: "Эгоист", dat: ["egoiście"]},
+    {noun: "Ateista", translation: "Атеист", dat: ["ateiście"]},
+    {noun: "Polonista", translation: "Польонист", dat: ["poloniście"]},
+    {noun: "Anglista", translation: "Англист", dat: ["angliście"]},
+    {noun: "Rusycysta", translation: "Русист", dat: ["rusycyście"]},
+    {noun: "Noblista", translation: "Нобелевский лауреат", dat: ["nobliście"]},
+    {noun: "Kapitalista", translation: "Капиталист", dat: ["kapitaliście"]},
+    {noun: "Artysta", translation: "Художник", dat: ["artyście"]},
+    {noun: "Sadysta", translation: "Садист", dat: ["sadyście"]},
+    {noun: "Jurysta", translation: "Юрист", dat: ["juryście"]},
+    {noun: "Faszysta", translation: "Фашист", dat: ["faszyście"]},
+    {noun: "Montażysta", translation: "Монтажист", dat: ["montażyście"]},
+    {noun: "Sprzedawca", translation: "Продавец", dat: ["sprzedawcy"]},
+    {noun: "Kierowca", translation: "Водитель", dat: ["kierowcy"]},
+    {noun: "Mówca", translation: "Оратор", dat: ["mówcy"]},
+    {noun: "Barbarzyńca", translation: "Варвар", dat: ["barbarzyńcy"]},
+    {noun: "Darczyńca", translation: "Даритель", dat: ["darczyńcy"]},
+    {noun: "Złoczyńca", translation: "Злодей", dat: ["złoczyńcy"]},
+    {noun: "Dostawca", translation: "Поставщик", dat: ["dostawcy"]},
+    {noun: "Dowódca", translation: "Командир", dat: ["dowódcy"]},
+    {noun: "Znawca", translation: "Знаток", dat: ["znawcy"]},
+    {noun: "Krwiodawca", translation: "Донор", dat: ["krwiodawcy"]},
+    {noun: "Specjalista", translation: "Специалист", dat: ["specjaliście"]},
+    {noun: "Najemca", translation: "Арендатор", dat: ["najemcy"]},
+    {noun: "Pracodawca", translation: "Работодатель", dat: ["pracodawcy"]},
+    {noun: "Nadawca", translation: "Отправитель", dat: ["nadawcy"]},
+    {noun: "Nabywca", translation: "Покупатель", dat: ["nabywcy"]},
+    {noun: "Kucharz", translation: "Повар", dat: ["kucharzowi"]},
+    {noun: "Lekarz", translation: "Врач", dat: ["lekarzowi"]},
+    {noun: "Murarz", translation: "Каменщик", dat: ["murarzowi"]},
+    {noun: "Cesarz", translation: "Император,кайзер", dat: ["cesarzowi"]},
+    {noun: "Piekarz", translation: "Пекарь", dat: ["piekarzowi"]},
+    {noun: "Piłkarz", translation: "Футболист", dat: ["piłkarzowi"]},
+    {noun: "Strażak", translation: "Пожарный", dat: ["strażakowi"]},
+    {noun: "Policjant", translation: "Полицейский", dat: ["policjantowi"]},
+    {noun: "Marynarz", translation: "Моряк", dat: ["marynarzowi"]},
+	{noun: "Kwiat", translation: "Цвет, цветок", dat: ["kwiatu", "kwiatowi"]},
+	{noun: "Orzeł", translation: "Орёл", dat: ["orłu", "orłowi"]},
+	{noun: "Kat", translation: "Палач", dat: ["katu", "katowi"]},
+	{noun: "Sędzia", translation: "Судья", dat: ["sędziemu", "sędzi"]}
+    ];
+
+var container = document.getElementById('question-container');
+
+    function loadRandomQuestion() {
+        container.innerHTML = ''; // Clear the container
+
+        // Pick a random noun
+        var randomIndex = Math.floor(Math.random() * nouns.length);
+        var nounObj = nouns[randomIndex];
+
+        // Create the question
+        var questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+
+        // Text for the noun and translation
+        var questionP = document.createElement('p');
+        questionP.textContent = nounObj.noun + ' (' + nounObj.translation + ')';
+        questionDiv.appendChild(questionP);
+
+        // Add input container with "Dziękuję:" and the input field aligned on the same line
+        var inputContainer = document.createElement('div');
+        inputContainer.classList.add('input-container');
+
+        // Add "Widzę:" to the input container
+        var seeTextP = document.createElement('p');
+        seeTextP.textContent = "Dziękuję:";
+        inputContainer.appendChild(seeTextP);
+
+        // Input field
+        let input = document.createElement('input');
+        input.type = 'text';
+        input.dataset.answer = nounObj.dat;
+
+        let emojiSpan = document.createElement('span');
+        emojiSpan.classList.add('emoji');
+
+        inputContainer.appendChild(input);
+        inputContainer.appendChild(emojiSpan);
+        questionDiv.appendChild(inputContainer);
+
+        // Add Check Button
+        let checkButton = document.createElement("button");
+        checkButton.textContent = "Проверь";
+        checkButton.type = "button";
+
+        // Add Next Button
+        let nextButton = document.createElement("button");
+        nextButton.textContent = "Дальше";
+        nextButton.type = "button";
+        nextButton.style.marginLeft = "10px";
+        nextButton.addEventListener("click", loadRandomQuestion);
+
+        // Function to check the answer
+        function checkAnswer() {
+            if (input.value.toLowerCase() === input.dataset.answer.toLowerCase()) {
+                input.className = 'correct';
+                emojiSpan.textContent = '✔️';
+                input.dataset.correct = "true"; // Mark the input as correct
+            } else {
+                input.className = 'incorrect';
+                emojiSpan.textContent = '❌';
+                input.dataset.correct = "false"; // Mark the input as incorrect
+            }
+        }
+
+        checkButton.addEventListener("click", checkAnswer);
+
+        // Create a container for the buttons and add the buttons to it
+        var buttonContainer = document.createElement("div");
+        buttonContainer.classList.add('button-container');
+        buttonContainer.appendChild(checkButton);
+        buttonContainer.appendChild(nextButton);
+        questionDiv.appendChild(buttonContainer);
+
+        // Add Enter Key Functionality
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (input.dataset.correct === "true") {
+                    nextButton.click(); // Trigger the "Next" button if the answer is correct
+                } else {
+                    checkAnswer(); // Check the answer on the first Enter press
+                }
+            }
+        });
+
+        container.appendChild(questionDiv);
+    }
+
+    // Load the first random question
+    loadRandomQuestion();
+</script>
+
+    <h2 style="font-size: 1.5em; margin: 100px 0;">
+        <a href="index.html";>Вернитесь на главную страницу.</a>
+    </h2>
+</body>
+</html>
