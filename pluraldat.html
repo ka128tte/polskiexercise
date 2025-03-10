@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>Celownik - liczba mnoga</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+        }
+        .correct {
+            color: darkgreen;
+            background-color: lightgreen;
+        }
+        .incorrect {
+            color: darkred;
+            background-color: lightcoral;
+            text-decoration: line-through;
+        }
+        input[type="text"] {
+            width: 150px;
+        }
+        .question p {
+            font-size: 1.5em;
+            margin: 10px 0; /* Reduced margin to decrease space between elements */
+        }
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .input-wrapper span {
+            margin-left: 8px;
+            font-size: 1.2em;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: row; /* Aligns "Widzę" and the input field on the same line */
+            align-items: center;
+            justify-content: center;
+        }
+        .input-container p {
+            margin-right: 10px; /* Space between "Widzę" and the input */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center; /* Center buttons horizontally */
+            margin-top: 10px; /* Add margin above the buttons */
+        }
+        button {
+            font-family: "Nunito", sans-serif;
+            text-transform: uppercase;
+            border-radius: 7px;
+            border: none;
+            color: white;
+            background-color: rgb(59, 121, 80);
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 0 10px; /* Space between the buttons */
+        }
+    </style>
+</head>
+<body>
+    <h1>Polskie rzeczowniki - Celownik</h1>
+    <div id="question-container">
+        <!-- Random question will be displayed here -->
+    </div>
+    <script>
+        var nouns = [
+        {noun: "Muzea", translation: "Музеи", dat: "muzeom"},
+    {noun: "Akwaria", translation: "Аквариумы", dat: "akwariom"},
+    {noun: "Fora", translation: "Форумы", dat: "forom"},
+    {noun: "Podia", translation: "Подиумы", dat: "podiom"},
+    {noun: "Licea", translation: "Лицея", dat: "liceom"},
+    {noun: "Gimnazja", translation: "Гимназии", dat: "gimnazjom"},
+    {noun: "Centra", translation: "Центры", dat: "centrom"},
+    {noun: "Archiwa", translation: "Архивы", dat: "archiwom"},
+    {noun: "Planetaria", translation: "Планетарии", dat: "planetariom"},
+    {noun: "Terraria", translation: "Террариумы", dat: "terrariom"},
+    {noun: "Szczenięta", translation: "Щенки", dat: "szczeniętom"},
+    {noun: "Kocięta", translation: "Котёнки", dat: "kociętom"},
+    {noun: "Niemowlęta", translation: "Младенцы", dat: "niemowlętom"},
+    {noun: "Prosięta", translation: "Поросёнки", dat: "prosiętom"},
+    {noun: "Cielęta", translation: "Телёнки", dat: "cielętom"},
+    {noun: "Jagnięta", translation: "Ягнята", dat: "jagniętom"},
+    {noun: "Koźlęta", translation: "Козлята", dat: "koźlętom"},
+    {noun: "Kurczęta", translation: "Цыплята", dat: "kurczętom"},
+    {noun: "Pisklęta", translation: "Птенцы", dat: "pisklętom"},
+    {noun: "Wilczęta", translation: "Волчата", dat: "wilczętom"},
+    {noun: "Zwierzęta", translation: "Животные, звери", dat: "zwierzętom"},
+    {noun: "Źrebięta", translation: "Жеребята", dat: "źrebiętom"},
+    {noun: "Bydlęta", translation: "Скотина, быдлёнки", dat: "bydlętom"},
+    {noun: "Bliźnięta", translation: "Близнецы", dat: "bliźniętom"},
+    {noun: "Imiona", translation: "Имена", dat: "imionom"},
+    {noun: "Znamiona", translation: "Родимые пятна, родинки", dat: "znamionom"},
+    {noun: "Plemiona", translation: "Племена", dat: "plemionom"},
+    {noun: "Ramiona", translation: "Плечи", dat: "ramionom"},
+    {noun: "Brzemiona", translation: "Бремена", dat: "brzemionom"},
+    {noun: "Wymiona", translation: "Вымена", dat: "wymionom"},
+    {noun: "Strzemiona", translation: "Стремена", dat: "strzemionom"},
+    {noun: "Ciemiona", translation: "Темена", dat: "ciemionom"},
+    {noun: "Okna", translation: "Окна", dat: "oknom"},
+    {noun: "Wiadra", translation: "Ведра", dat: "wiadrom"},
+    {noun: "Jeziora", translation: "Озёра", dat: "jeziorom"},
+    {noun: "Błota", translation: "Грязи", dat: "błotom"},
+    {noun: "Jądra", translation: "Ядра", dat: "jądrom"},
+    {noun: "Lustra", translation: "Зеркала", dat: "lustrum"},
+    {noun: "Żebra", translation: "Рёбра", dat: "żebrom"},
+    {noun: "Piętra", translation: "Этажи", dat: "piętrom"},
+    {noun: "Futra", translation: "Мехи, шубы", dat: "futrom"},
+    {noun: "Dobra", translation: "Блага", dat: "dobrom"},
+    {noun: "Wina", translation: "Вина", dat: "winom"},
+    {noun: "Piwa", translation: "Пива", dat: "piwom"},
+    {noun: "Nieba", translation: "Небеса", dat: "niebom"},
+    {noun: "Mydła", translation: "Мыла", dat: "mydłom"},
+    {noun: "Siodła", translation: "Седла", dat: "siodłom"},
+    {noun: "Masła", translation: "Масла (сливочные)", dat: "masłom"},
+    {noun: "Drzewa", translation: "Деревья", dat: "drzewom"},
+    {noun: "Bagna", translation: "Болота", dat: "bagnom"},
+    {noun: "Włókna", translation: "Волокна", dat: "włóknom"},
+    {noun: "Rzemiosła", translation: "Ремёсла", dat: "rzemiosłom"},
+    {noun: "Książki", translation: "Книжки", dat: "książkom"},
+    {noun: "Kobiety", translation: "Женщины", dat: "kobietom"},
+    {noun: "Dziewczyny", translation: "Девушки", dat: "dziewczynom"},
+    {noun: "Rzeki", translation: "Реки", dat: "rzekom"},
+    {noun: "Lampy", translation: "Лампы", dat: "lampom"},
+    {noun: "Mamy", translation: "Мамы", dat: "mamom"},
+    {noun: "Siostry", translation: "Сестры", dat: "siostrom"},
+    {noun: "Koleżanki", translation: "Подруги", dat: "koleżankom"},
+    {noun: "Sukienki", translation: "Платья", dat: "sukienkom"},
+    {noun: "Córki", translation: "Дочери", dat: "córkom"},
+    {noun: "Kawy", translation: "Кофе", dat: "kawom"},
+    {noun: "Torebki", translation: "Сумки", dat: "torebkom"},
+    {noun: "Zupy", translation: "Супы", dat: "zupom"},
+    {noun: "Żaby", translation: "Лягушки", dat: "żabom"},
+    {noun: "Ryby", translation: "Рыбы", dat: "rybom"},
+    {noun: "Ściany", translation: "Стены", dat: "ścianom"},
+    {noun: "Poduszki", translation: "Подушки", dat: "poduszkom"},
+    {noun: "Wieże", translation: "Башни", dat: "wieżom"},
+    {noun: "Szafki", translation: "Шкафчики", dat: "szafkom"},
+    {noun: "Wody", translation: "Воды", dat: "wodom"},
+    {noun: "Bułki", translation: "Булки", dat: "bułkom"},
+    {noun: "Pracowniczki", translation: "Работницы", dat: "pracowniczkom"},
+    {noun: "Łyżki", translation: "Ложки", dat: "łyżkom"},
+    {noun: "Myszki", translation: "Мышки", dat: "myszkom"},
+    {noun: "Owce", translation: "Овцы", dat: "owcom"},
+    {noun: "Krowy", translation: "Коровы", dat: "krowom"},
+    {noun: "Kury", translation: "Курицы", dat: "kurzym"},
+    {noun: "Nogi", translation: "Ноги", dat: "nogom"},
+    {noun: "Babcie", translation: "Бабушки", dat: "babciom"},
+    {noun: "Ciocie", translation: "Тёти", dat: "ciociom"},
+    {noun: "Nauczycielki", translation: "Учительницы", dat: "nauczycielkom"},
+    {noun: "Sarny", translation: "Косули", dat: "sarnom"},
+    {noun: "Kaczki", translation: "Утки", dat: "kaczkom"},
+    {noun: "Kołdry", translation: "Одеяла", dat: "kołdrom"},
+    {noun: "Szuflady", translation: "Ящики", dat: "szufladom"},
+    {noun: "Podłogi", translation: "Полы", dat: "podłogom"},
+    {noun: "Tapety", translation: "Обои", dat: "tapetom"},
+    {noun: "Kanapy", translation: "Диваны", dat: "kanapom"},
+    {noun: "Półki", translation: "Полки", dat: "półkom"},
+    {noun: "Głowy", translation: "Головы", dat: "głowom"},
+    {noun: "Kuchnie", translation: "Кухни", dat: "kuchniom"},
+    {noun: "Sypialnie", translation: "Спальни", dat: "sypialniom"},
+    {noun: "Łazienki", translation: "Ванные", dat: "łazienkom"},
+    {noun: "Wełny", translation: "Шерсти", dat: "wełnom"},
+    {noun: "Ropuchy", translation: "Жабы", dat: "ropuchom"},
+    {noun: "Jaszczurki", translation: "Ящерицы", dat: "jaszczurkom"},
+    {noun: "Żmije", translation: "Гадюки", dat: "żmijom"},
+    {noun: "Wiewiórki", translation: "Белки", dat: "wiewiórkom"},
+    {noun: "Skrzynie", translation: "Ящики", dat: "skrzyniom"},
+    {noun: "Bawełny", translation: "Хлопка", dat: "bawełnom"},
+    {noun: "Muchy", translation: "Мухи", dat: "muszom"},
+    {noun: "Czapki", translation: "Шапки", dat: "czapkom"},
+ {noun: "Dźwigi", translation: "Краны", dat: "dźwigom"},
+{noun: "Karmniki", translation: "Кормушки", dat: "karmnikom"},
+{noun: "Spadochrony", translation: "Парашюты", dat: "spadochronom"},
+{noun: "Lornetki", translation: "Бинокли", dat: "lornetkom"},
+{noun: "Zeszyty", translation: "Тетради", dat: "zeszytom"} 
+];
+
+var container = document.getElementById('question-container');
+
+    function loadRandomQuestion() {
+        container.innerHTML = ''; // Clear the container
+
+        // Pick a random noun
+        var randomIndex = Math.floor(Math.random() * nouns.length);
+        var nounObj = nouns[randomIndex];
+
+        // Create the question
+        var questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+
+        // Text for the noun and translation
+        var questionP = document.createElement('p');
+        questionP.textContent = nounObj.noun + ' (' + nounObj.translation + ')';
+        questionDiv.appendChild(questionP);
+
+        // Add input container with "Dziękuję:" and the input field aligned on the same line
+        var inputContainer = document.createElement('div');
+        inputContainer.classList.add('input-container');
+
+        // Add "Widzę:" to the input container
+        var seeTextP = document.createElement('p');
+        seeTextP.textContent = "Dziękuję:";
+        inputContainer.appendChild(seeTextP);
+
+        // Input field
+        let input = document.createElement('input');
+        input.type = 'text';
+        input.dataset.answer = nounObj.dat;
+
+        let emojiSpan = document.createElement('span');
+        emojiSpan.classList.add('emoji');
+
+        inputContainer.appendChild(input);
+        inputContainer.appendChild(emojiSpan);
+        questionDiv.appendChild(inputContainer);
+
+        // Add Check Button
+        let checkButton = document.createElement("button");
+        checkButton.textContent = "Проверь";
+        checkButton.type = "button";
+
+        // Add Next Button
+        let nextButton = document.createElement("button");
+        nextButton.textContent = "Дальше";
+        nextButton.type = "button";
+        nextButton.style.marginLeft = "10px";
+        nextButton.addEventListener("click", loadRandomQuestion);
+
+        // Function to check the answer
+        function checkAnswer() {
+            if (input.value.toLowerCase() === input.dataset.answer.toLowerCase()) {
+                input.className = 'correct';
+                emojiSpan.textContent = '✔️';
+                input.dataset.correct = "true"; // Mark the input as correct
+            } else {
+                input.className = 'incorrect';
+                emojiSpan.textContent = '❌';
+                input.dataset.correct = "false"; // Mark the input as incorrect
+            }
+        }
+
+        checkButton.addEventListener("click", checkAnswer);
+
+        // Create a container for the buttons and add the buttons to it
+        var buttonContainer = document.createElement("div");
+        buttonContainer.classList.add('button-container');
+        buttonContainer.appendChild(checkButton);
+        buttonContainer.appendChild(nextButton);
+        questionDiv.appendChild(buttonContainer);
+
+        // Add Enter Key Functionality
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (input.dataset.correct === "true") {
+                    nextButton.click(); // Trigger the "Next" button if the answer is correct
+                } else {
+                    checkAnswer(); // Check the answer on the first Enter press
+                }
+            }
+        });
+
+        container.appendChild(questionDiv);
+    }
+
+    // Load the first random question
+    loadRandomQuestion();
+</script>
+
+    <h2 style="font-size: 1.5em; margin: 100px 0;">
+        <a href="index.html";>Вернитесь на главную страницу.</a>
+    </h2>
+</body>
+</html>
