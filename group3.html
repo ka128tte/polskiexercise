@@ -53,10 +53,8 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-			font-family: "Nunito", sans-serif;
+            font-family: "Nunito", sans-serif;
             text-transform: uppercase;
-            border-radius: 7px;
-            border: none;
             color: white;
             background-color: rgb(59, 121, 80);
         }
@@ -72,7 +70,7 @@
     
     <script>
         var verbs = [
-{verb: "Bieleć", translation: "Белеть", forms: ["bieleję", "bielejesz", "bieleje", "bielejemy", "bielejecie", "bieleją"]},
+            {verb: "Bieleć", translation: "Белеть", forms: ["bieleję", "bielejesz", "bieleje", "bielejemy", "bielejecie", "bieleją"]},
         {verb: "Błękitnieć", translation: "Голубеть", forms: ["błękitnieję", "błękitniejesz", "błękitnieje", "błękitniejemy", "błękitniejecie", "błękitnieją"]},
 		{verb: "Brązowieć", translation: "Коричневеть", forms: ["brązowieję", "brązowiejesz", "brązowieje", "brązowiejemy", "brązowiejecie", "brązowieją"]},
 		{verb: "Brzydnieć", translation: "Становиться уродливым", forms: ["brzydnieję", "brzydniejesz", "brzydnieje", "brzydniejemy", "brzydniejecie", "brzydnieją"]},
@@ -122,7 +120,6 @@
 		{verb: "Zdrowieć", translation: "Выздоравливать", forms: ["zdrowieję", "zdrowiejesz", "zdrowieje", "zdrowiejemy", "zdrowiejecie", "zdrowieją"]},
 		{verb: "Zielenieć", translation: "Зеленеть", forms: ["zielenieję", "zieleniejesz", "zielenieje", "zieleniejemy", "zieleniejecie", "zielenieją"]},
 		{verb: "Żółknieć, żółcieć", translation: "Желтеть", forms: ["żółknieję|żółcieję", "żółkniejesz|żółciejesz", "żółknieje|żółcieje", "żółkniejemy|żółciejemy", "żółkniejecie|żółciejecie", "żółknieją|żółcieją"]},
-
         ];
         
         var form = document.getElementById('cloze-test');
@@ -165,40 +162,22 @@
             form.appendChild(questionDiv);
         }
         
-        function checkAnswers() {
-            let inputs = document.querySelectorAll('input');
-            inputs.forEach(input => {
-                let emojiSpan = input.nextElementSibling;
-                let correctAnswer = input.dataset.answer.toLowerCase();
-                if (input.value.toLowerCase() === correctAnswer) {
-                    input.className = 'correct';
-                    emojiSpan.textContent = '✔️';
-                } else {
-                    input.className = 'incorrect';
-                    emojiSpan.textContent = '❌';
-                }
-            });
+        function checkSingleAnswer(input) {
+            let emojiSpan = input.nextElementSibling;
+            let correctAnswers = input.dataset.answer.split('|').map(ans => ans.toLowerCase().trim());
+            if (correctAnswers.includes(input.value.toLowerCase().trim())) {
+                input.className = 'correct';
+                emojiSpan.textContent = '✔️';
+            } else {
+                input.className = 'incorrect';
+                emojiSpan.textContent = '❌';
+            }
         }
         
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                let inputs = document.querySelectorAll('input');
-                for (let input of inputs) {
-                    if (!input.classList.contains('correct')) {
-                        let emojiSpan = input.nextElementSibling;
-                        let correctAnswer = input.dataset.answer.toLowerCase();
-                        if (input.value.toLowerCase() === correctAnswer) {
-                            input.className = 'correct';
-                            emojiSpan.textContent = '✔️';
-                        } else {
-                            input.className = 'incorrect';
-                            emojiSpan.textContent = '❌';
-                        }
-                        return;
-                    }
-                }
-                loadNewVerb();
+                checkSingleAnswer(document.activeElement);
             }
         });
         

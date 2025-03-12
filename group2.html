@@ -53,10 +53,8 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-			font-family: "Nunito", sans-serif;
+            font-family: "Nunito", sans-serif;
             text-transform: uppercase;
-            border-radius: 7px;
-            border: none;
             color: white;
             background-color: rgb(59, 121, 80);
         }
@@ -72,11 +70,11 @@
     
     <script>
         var verbs = [
-    {verb: "Umieć", translation: "Уметь", forms: ["umiem", "umiesz", "umie", "umiemy", "umiecie", "umieją"]},
-        {verb: "Rozumieć", translation: "Понимать", forms: ["rozumiem", "rozumiesz", "rozumie", "rozumiemy", "rozumiecie", "rozumieją"]},
-		{verb: "Porozumieć (się)", translation: "Договориться, объясниться", forms: ["porozumiem", "porozumiesz", "porozumie", "porozumiemy", "porozumiecie", "porozumieją"]},
-        {verb: "Śmieć", translation: "Сметь", forms: ["śmiem", "śmiesz", "śmie", "śmiemy", "śmiecie", "śmieją|śmią"]},
-        {verb: "Zrozumieć", translation: "Понять", forms: ["zrozumiem", "zrozumiesz", "zrozumie", "zrozumiemy", "zrozumiecie", "zrozumieją"]},
+            {verb: "Umieć", translation: "Уметь", forms: ["umiem", "umiesz", "umie", "umiemy", "umiecie", "umieją"]},
+            {verb: "Rozumieć", translation: "Понимать", forms: ["rozumiem", "rozumiesz", "rozumie", "rozumiemy", "rozumiecie", "rozumieją"]},
+            {verb: "Porozumieć (się)", translation: "Договориться, объясниться", forms: ["porozumiem", "porozumiesz", "porozumie", "porozumiemy", "porozumiecie", "porozumieją"]},
+            {verb: "Śmieć", translation: "Сметь", forms: ["śmiem", "śmiesz", "śmie", "śmiemy", "śmiecie", "śmieją|śmią"]},
+            {verb: "Zrozumieć", translation: "Понять", forms: ["zrozumiem", "zrozumiesz", "zrozumie", "zrozumiemy", "zrozumiecie", "zrozumieją"]},
         ];
         
         var form = document.getElementById('cloze-test');
@@ -119,40 +117,22 @@
             form.appendChild(questionDiv);
         }
         
-        function checkAnswers() {
-            let inputs = document.querySelectorAll('input');
-            inputs.forEach(input => {
-                let emojiSpan = input.nextElementSibling;
-                let correctAnswer = input.dataset.answer.toLowerCase();
-                if (input.value.toLowerCase() === correctAnswer) {
-                    input.className = 'correct';
-                    emojiSpan.textContent = '✔️';
-                } else {
-                    input.className = 'incorrect';
-                    emojiSpan.textContent = '❌';
-                }
-            });
+        function checkSingleAnswer(input) {
+            let emojiSpan = input.nextElementSibling;
+            let correctAnswers = input.dataset.answer.split('|').map(ans => ans.toLowerCase().trim());
+            if (correctAnswers.includes(input.value.toLowerCase().trim())) {
+                input.className = 'correct';
+                emojiSpan.textContent = '✔️';
+            } else {
+                input.className = 'incorrect';
+                emojiSpan.textContent = '❌';
+            }
         }
         
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                let inputs = document.querySelectorAll('input');
-                for (let input of inputs) {
-                    if (!input.classList.contains('correct')) {
-                        let emojiSpan = input.nextElementSibling;
-                        let correctAnswer = input.dataset.answer.toLowerCase();
-                        if (input.value.toLowerCase() === correctAnswer) {
-                            input.className = 'correct';
-                            emojiSpan.textContent = '✔️';
-                        } else {
-                            input.className = 'incorrect';
-                            emojiSpan.textContent = '❌';
-                        }
-                        return;
-                    }
-                }
-                loadNewVerb();
+                checkSingleAnswer(document.activeElement);
             }
         });
         

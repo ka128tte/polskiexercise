@@ -53,10 +53,8 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-			font-family: "Nunito", sans-serif;
+            font-family: "Nunito", sans-serif;
             text-transform: uppercase;
-            border-radius: 7px;
-            border: none;
             color: white;
             background-color: rgb(59, 121, 80);
         }
@@ -72,95 +70,9 @@
     
     <script>
         var verbs = [
-    {verb: "Badać", translation: "Исследовать", forms: ["badam", "badasz", "bada", "badamy", "badacie", "badają"]},
-    {verb: "Bełkotać", translation: "Лепетать", forms: ["bełkoczę", "bełkoczesz", "bełkocze", "bełkoczemy", "bełkoczecie", "bełkoczą"]},
-    {verb: "Biegać", translation: "Бегать", forms: ["biegam", "biegasz", "biega", "biegamy", "biegacie", "biegają"]},
-    {verb: "Chować", translation: "Прятать", forms: ["chowam", "chowasz", "chowa", "chowamy", "chowacie", "chowają"]},
-    {verb: "Chwytać", translation: "Хватать, схватывать", forms: ["chwytam", "chwytasz", "chwyta", "chwytamy", "chwytacie", "chwytają"]},
-    {verb: "Cofać", translation: "Отступать", forms: ["cofam", "cofasz", "cofa", "cofamy", "cofacie", "cofają"]},
-    {verb: "Czekać", translation: "Ждать", forms: ["czekam", "czekasz", "czeka", "czekamy", "czekacie", "czekają"]},
-    {verb: "Czepiać (się)", translation: "Приставать, цепляться", forms: ["czepiam", "czepiasz", "czepia", "czepiamy", "czepiacie", "czepiają"]},
-    {verb: "Czuwać", translation: "Бодрствовать", forms: ["czuwam", "czuwasz", "czuwa", "czuwamy", "czuwacie", "czuwają"]},
-    {verb: "Czytać", translation: "Читать", forms: ["czytam", "czytasz", "czyta", "czytamy", "czytacie", "czytają"]},
-            {verb: "Dać", translation: "Дать", forms: ["dam", "dasz", "da", "damy", "dacie", "dają"]},
-    {verb: "Dbać", translation: "Заботиться", forms: ["dbam", "dbasz", "dba", "dbamy", "dbacie", "dbają"]},
-    {verb: "Dmuchać", translation: "Дуть", forms: ["dmucham", "dmuchasz", "dmucha", "dmuchamy", "dmuchacie", "dmuchają"]},
-    {verb: "Doceniać", translation: "Ценить", forms: ["doceniam", "doceniasz", "docenia", "doceniamy", "doceniacie", "doceniają"]},
-			{verb: "Domyślać się", translation: "Догадываться", forms: ["domyślam się", "domyślasz się", "domyśla się", "domyślamy się", "domyślacie się", "domyślają się"]},
-			{verb: "Dostarczać", translation: "Доставлять", forms: ["dostarczam", "dostarczasz", "dostarcza", "dostarczamy", "dostarczacie", "dostarczają"]},
-    {verb: "Dotykać", translation: "Касаться, трогать", forms: ["dotykam", "dotykasz", "dotyka", "dotykamy", "dotykacie", "dotykają"]},
-    {verb: "Dźwigać", translation: "Поднимать, тащить", forms: ["dźwigam", "dźwigasz", "dźwiga", "dźwigamy", "dźwigacie", "dźwigają"]},
-            {verb: "Ganiać", translation: "Гонять", forms: ["ganiam", "ganiasz", "gania", "ganiamy", "ganiacie", "ganiają"]},
-    {verb: "Grać", translation: "Играть", forms: ["gram", "grasz", "gra", "gramy", "gracie", "grają"]},
-            {verb: "Klikać", translation: "Кликать", forms: ["klikam", "klikasz", "klika", "klikamy", "klikacie", "klikają"]},
-			{verb: "Kochać", translation: "Любить", forms: ["kocham", "kochasz", "kocha", "kochamy", "kochacie", "kochają"]},
-			{verb: "Korzystać", translation: "Пользоваться", forms: ["korzystam", "korzystasz", "korzysta", "korzystamy", "korzystacie", "korzystają"]},
-    {verb: "Latać", translation: "Летать", forms: ["latam", "latasz", "lata", "latamy", "latacie", "latają"]},
-    {verb: "Machać", translation: "Махать", forms: ["macham", "machasz", "macha", "machamy", "machacie", "machają"]},
-			{verb: "Mieszać", translation: "Мешать", forms: ["mieszam", "mieszasz", "miesza", "mieszamy", "mieszacie", "mieszają"]},
-    {verb: "Mieszkać", translation: "Жить,проживать", forms: ["mieszkam", "mieszkasz", "mieszka", "mieszkamy", "mieszkacie", "mieszkają"]},
-			{verb: "Nadążać", translation: "Успевать за", forms: ["nadążam", "nadążasz", "nadąża", "nadążamy", "nadążacie", "nadążają"]},
-			{verb: "Nagrywać", translation: "Записывать", forms: ["nagrywam", "nagrywasz", "nagrywa", "nagrywamy", "nagrywacie", "nagrywają"]},
-			{verb: "Namawiać", translation: "Уговаривать", forms: ["namawiam", "namawiasz", "namawia", "namawiamy", "namawiacie", "namawiają"]},
-			{verb: "Narzekać", translation: "Жаловаться", forms: ["narzekam", "narzekasz", "narzeka", "narzekamy", "narzekacie", "narzekają"]},
-			{verb: "Oddać", translation: "Отдать", forms: ["oddam", "oddasz", "odda", "oddamy", "oddacie", "oddają"]},
-			{verb: "Oddychać", translation: "Дышать", forms: ["oddycham", "oddychasz", "oddycha", "oddychamy", "oddychacie", "oddychają"]},
-			{verb: "Odkrywać", translation: "Открывать (что-то новое)", forms: ["odkrywam", "odkrywasz", "odkrywa", "odkrywamy", "odkrywacie", "odkrywają"]},
-            {verb: "Odmawiać", translation: "Отказываться", forms: ["odmawiam", "odmawiasz", "odmawia", "odmawiamy", "odmawiacie", "odmawiają"]},
-			{verb: "Odpoczywać", translation: "Отдыхать", forms: ["odpoczywam", "odpoczywasz", "odpoczywa", "odpoczywamy", "odpoczywacie", "odpoczywają"]},
-            {verb: "Odwiedzać", translation: "Навещать", forms: ["odwiedzam", "odwiedzasz", "odwiedza", "odwiedzamy", "odwiedzacie", "odwiedzają"]},
-			{verb: "Oglądać", translation: "Смотреть", forms: ["oglądam", "oglądasz", "ogląda", "oglądamy", "oglądacie", "oglądają"]},
-			{verb: "Omijać", translation: "Избегать", forms: ["omijam", "omijasz", "omija", "omijamy", "omijacie", "omijają"]},
-			{verb: "Opowiadać", translation: "Рассказывать", forms: ["opowiadam", "opowiadasz", "opowiada", "opowiadamy", "opowiadacie", "opowiadają"]},
-			{verb: "Otwierać", translation: "Открывать (дверь, коробку)", forms: ["otwieram", "otwierasz", "otwiera", "otwieramy", "otwieracie", "otwierają"]},
-    {verb: "Pływać", translation: "Плавать", forms: ["pływam", "pływasz", "pływa", "pływamy", "pływacie", "pływają"]},
-			{verb: "Podążać", translation: "Следовать", forms: ["podążam", "podążasz", "podąża", "podążamy", "podążacie", "podążają"]},
-            {verb: "Pogarszać", translation: "Ухудшать", forms: ["pogarszam", "pogarszasz", "pogarsza", "pogarszamy", "pogarszacie", "pogarszają"]},
-            {verb: "Pomagać", translation: "Помогать", forms: ["pomagam", "pomagasz", "pomaga", "pomagamy", "pomagacie", "pomagają"]},
-    {verb: "Powtarzać", translation: "Повторять", forms: ["powtarzam", "powtarzasz", "powtarza", "powtarzamy", "powtarzacie", "powtarzają"]},
-    {verb: "Pozwalać", translation: "Позволять", forms: ["pozwalam", "pozwalasz", "pozwala", "pozwalamy", "pozwalacie", "pozwalają"]},
-            {verb: "Przegrywać", translation: "Проигрывать", forms: ["przegrywam", "przegrywasz", "przegrywa", "przegrywamy", "przegrywacie", "przegrywają"]},
-			{verb: "Przepraszać", translation: "Извиняться", forms: ["przepraszam", "przepraszasz", "przeprasza", "przepraszamy", "przepraszacie", "przepraszają"]},
-			{verb: "Przytulać", translation: "Обнимать", forms: ["przytulam", "przytulasz", "przytula", "przytulamy", "przytulacie", "przytulają"]},
-    {verb: "Pukać", translation: "Стучать", forms: ["pukam", "pukasz", "puka", "pukamy", "pukacie", "pukają"]},
-			{verb: "Puszczać", translation: "Отпускать", forms: ["puszczam", "puszczasz", "puszcza", "puszczamy", "puszczacie", "puszczają"]},
-    {verb: "Pytać", translation: "Спрашивать", forms: ["pytam", "pytasz", "pyta", "pytamy", "pytacie", "pytają"]},
-    {verb: "Słuchać", translation: "Слушать", forms: ["słucham", "słuchasz", "słucha", "słuchamy", "słuchacie", "słuchają"]},
-				        {verb: "Spotykać", translation: "Встречать", forms: ["spotykam", "spotykasz", "spotyka", "spotykamy", "spotykacie", "spotykają"]},
-			{verb: "Spodziewać", translation: "Ожидать", forms: ["spodziewam", "spodziewasz", "spodziewa", "spodziewamy", "spodziewacie", "spodziewają"]},
-    {verb: "Szukać", translation: "Искать", forms: ["szukam", "szukasz", "szuka", "szukamy", "szukacie", "szukają"]},
-            {verb: "Ścigać", translation: "Гнать, преследовать", forms: ["ścigam", "ścigasz", "ściga", "ścigamy", "ścigacie", "ścigają"]},
-    {verb: "Ściskać", translation: "Сжимать, стискивать", forms: ["ściskam", "ściskasz", "ściska", "ściskamy", "ściskacie", "ściskają"]},
-    {verb: "Śpiewać", translation: "Петь", forms: ["śpiewam", "śpiewasz", "śpiewa", "śpiewamy", "śpiewacie", "śpiewają"]},
-    {verb: "Trwać", translation: "Длиться", forms: ["trwam", "trwasz", "trwa", "trwamy", "trwacie", "trwają"]},
-    {verb: "Trzymać", translation: "Держать", forms: ["trzymam", "trzymasz", "trzyma", "trzymamy", "trzymacie", "trzymają"]},
-			{verb: "Układać", translation: "Укладывать", forms: ["układam", "układasz", "układa", "układamy", "układacie", "układają"]},
-            {verb: "Ulepszać", translation: "Улучшать", forms: ["ulepszam", "ulepszasz", "ulepsza", "ulepszamy", "ulepszacie", "ulepszają"]},
-    {verb: "Upadać", translation: "Падать", forms: ["upadam", "upadasz", "upada", "upadamy", "upadacie", "upadają"]},
-			{verb: "Uważać", translation: "Верить; быть осторожным", forms: ["uważam", "uważasz", "uważa", "uważamy", "uważacie", "uważają"]},
-			{verb: "Włączać", translation: "Включать", forms: ["włączam", "włączasz", "włącza", "włączamy", "włączacie", "włączają"]},
-    {verb: "Wybierać", translation: "Выбирать", forms: ["wybieram", "wybierasz", "wybiera", "wybieramy", "wybieracie", "wybierają"]},
-            {verb: "Wygrywać", translation: "Побеждать", forms: ["wygrywam", "wygrywasz", "wygrywa", "wygrywamy", "wygrywacie", "wygrywają"]},
-			{verb: "Wyłączać", translation: "Выключать", forms: ["wyłączam", "wyłączasz", "wyłącza", "wyłączamy", "wyłączacie", "wyłączają"]},
-            {verb: "Wymagać", translation: "Требовать", forms: ["wymagam", "wymagasz", "wymaga", "wymagamy", "wymagacie", "wymagają"]},
-			{verb: "Wysyłać", translation: "Отправлять", forms: ["wysyłam", "wysyłasz", "wysyła", "wysyłamy", "wysyłacie", "wysyłają"]},
-			{verb: "Zabierać", translation: "Забрать", forms: ["zabieram", "zabierasz", "zabiera", "zabieramy", "zabieracie", "zabierają"]},
-    {verb: "Zabijać", translation: "Убивать", forms: ["zabijam", "zabijasz", "zabija", "zabijamy", "zabijacie", "zabijają"]},
-			{verb: "Zaczynać", translation: "Начинать", forms: ["zaczynam", "zaczynasz", "zaczyna", "zaczynamy", "zaczynacie", "zaczynają"]},
-			{verb: "Zamawiać", translation: "Заказывать", forms: ["zamawiam", "zamawiasz", "zamawia", "zamawiamy", "zamawiacie", "zamawiają"]},
-            {verb: "Zamiatać", translation: "Подметать", forms: ["zamiatam", "zamiatasz", "zamiata", "zamiatamy", "zamiatacie", "zamiatają"]},
-			{verb: "Zamierzać", translation: "Собираться", forms: ["zamierzam", "zamierzasz", "zamierza", "zamierzamy", "zamierzacie", "zamierzają"]},
-			{verb: "Zamykać", translation: "Закрывать", forms: ["zamykam", "zamykasz", "zamyka", "zamykamy", "zamykacie", "zamykają"]},
-			{verb: "Zapraszać", translation: "Приглашать", forms: ["zapraszam", "zapraszasz", "zaprasza", "zapraszamy", "zapraszacie", "zapraszаją"]},
-			{verb: "Ziewać", translation: "Зевать", forms: ["ziewam", "ziewasz", "ziewa", "ziewamy", "ziewacie", "ziewаją"]},
-            {verb: "Zjadać", translation: "Съедать", forms: ["zjadam", "zjadasz", "zjada", "zjadamy", "zjadacie", "zjadają"]},
-            {verb: "Zmieniać", translation: "Изменять", forms: ["zmieniam", "zmieniasz", "zmienia", "zmieniamy", "zmieniacie", "zmieniają"]},
-            {verb: "Zmywać", translation: "Мыть посуду,смывать", forms: ["zmywam", "zmywasz", "zmywa", "zmywamy", "zmywacie", "zmywają"]},
-    {verb: "Znać", translation: "Знать", forms: ["znam", "znasz", "zna", "znamy", "znacie", "znają"]},
-            {verb: "Zostawiać", translation: "Оставлять", forms: ["zostawiam", "zostawiasz", "zostawia", "zostawiamy", "zostawiacie", "zostawiają"]},
-            {verb: "Zrywać", translation: "Срывать, порвать", forms: ["zrywam", "zrywasz", "zrywa", "zrywamy", "zrywacie", "zrywają"]},
-            {verb: "Zwalniać", translation: "Замедлять; увольнять; освобождать", forms: ["zwalniam", "zwalniasz", "zwalnia", "zwalniamy", "zwalniacie", "zwalniają"]},
-            {verb: "Zwiedzać", translation: "Посещать, осматривать", forms: ["zwiedzam", "zwiedzasz", "zwiedza", "zwiedzamy", "zwiedzacie", "zwiedzają"]}
+            {verb: "Badać", translation: "Исследовать", forms: ["badam", "badasz", "bada", "badamy", "badacie", "badają"]},
+            {verb: "Bełkotać", translation: "Лепетать", forms: ["bełkoczę", "bełkoczesz", "bełkocze", "bełkoczemy", "bełkoczecie", "bełkoczą"]},
+            {verb: "Biegać", translation: "Бегать", forms: ["biegam", "biegasz", "biega", "biegamy", "biegacie", "biegają"]}
         ];
         
         var form = document.getElementById('cloze-test');
@@ -203,40 +115,22 @@
             form.appendChild(questionDiv);
         }
         
-        function checkAnswers() {
-            let inputs = document.querySelectorAll('input');
-            inputs.forEach(input => {
-                let emojiSpan = input.nextElementSibling;
-                let correctAnswer = input.dataset.answer.toLowerCase();
-                if (input.value.toLowerCase() === correctAnswer) {
-                    input.className = 'correct';
-                    emojiSpan.textContent = '✔️';
-                } else {
-                    input.className = 'incorrect';
-                    emojiSpan.textContent = '❌';
-                }
-            });
+        function checkSingleAnswer(input) {
+            let emojiSpan = input.nextElementSibling;
+            let correctAnswer = input.dataset.answer.toLowerCase();
+            if (input.value.toLowerCase() === correctAnswer) {
+                input.className = 'correct';
+                emojiSpan.textContent = '✔️';
+            } else {
+                input.className = 'incorrect';
+                emojiSpan.textContent = '❌';
+            }
         }
         
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                let inputs = document.querySelectorAll('input');
-                for (let input of inputs) {
-                    if (!input.classList.contains('correct')) {
-                        let emojiSpan = input.nextElementSibling;
-                        let correctAnswer = input.dataset.answer.toLowerCase();
-                        if (input.value.toLowerCase() === correctAnswer) {
-                            input.className = 'correct';
-                            emojiSpan.textContent = '✔️';
-                        } else {
-                            input.className = 'incorrect';
-                            emojiSpan.textContent = '❌';
-                        }
-                        return;
-                    }
-                }
-                loadNewVerb();
+                checkSingleAnswer(document.activeElement);
             }
         });
         
