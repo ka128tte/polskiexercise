@@ -64,8 +64,8 @@
     <h1>Polskie czasowniki - Grupa II</h1>
     <form id="cloze-test"></form>
     <div class="button-container">
-        <button class="check-button" onclick="checkAnswers()">Проверь</button>
-        <button class="next-button" onclick="loadNewVerb()">Дальше</button>
+        <button class="check-button" type="button" onclick="checkAnswers()">Проверь</button>
+        <button class="next-button" type="button" onclick="loadNewVerb()">Дальше</button>
     </div>
     
     <script>
@@ -77,7 +77,7 @@
             {verb: "Zrozumieć", translation: "Понять", forms: ["zrozumiem", "zrozumiesz", "zrozumie", "zrozumiemy", "zrozumiecie", "zrozumieją"]},
         ];
         
-        var form = document.getElementById('cloze-test');
+       var form = document.getElementById('cloze-test');
         var currentVerb = null;
         
         function loadNewVerb() {
@@ -128,15 +128,36 @@
                 emojiSpan.textContent = '❌';
             }
         }
-        
+            function checkAnswers() {
+        document.querySelectorAll('input').forEach(checkSingleAnswer);
+    }
+
+    function allFieldsCorrect() {
+        return Array.from(document.querySelectorAll('input')).every(input => input.classList.contains('correct'));
+    }
+
+    function getActiveField() {
+        return document.activeElement;
+    }
+
         document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                checkSingleAnswer(document.activeElement);
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            // Check if all fields are correct
+            if (allFieldsCorrect()) {
+                loadNewVerb(); // Load the next question if all fields are correct
+            } else {
+                let activeField = getActiveField();
+                
+                // Check if the active field is an input field
+                if (activeField && activeField.tagName === "INPUT") {
+                    checkSingleAnswer(activeField); // Check only the active field
+                }
             }
-        });
-        
-        loadNewVerb();
+        }
+    });
+
+    loadNewVerb();  // Initially load a verb for level 1
     </script>
 </body>
 </html>

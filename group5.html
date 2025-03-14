@@ -1,50 +1,209 @@
 <!DOCTYPE html>
-<html lang="ru">
-
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-    <meta charset="UTF-8">
-    <title>Страница</title>
-    <!-- Link to Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <title>Polskie czasowniki - Grupa V</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     <style>
-        /* Apply Nunito font */
         body {
             font-family: 'Nunito', sans-serif;
-            margin: 0;
-            padding: 0;
+            text-align: center;
+        }
+        .correct {
+            color: darkgreen;
+            background-color: lightgreen;
+        }
+        .incorrect {
+            color: darkred;
+            background-color: lightcoral;
+            text-decoration: line-through;
+        }
+        .question p {
+            font-size: 1.5em;
+            margin-top: 50px;
+        }
+        .input-wrapper {
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f5f5f5;
-            flex-direction: column; /* Added to stack elements vertically */
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            min-height: 40px;
         }
-
-        /* Styling the text */
-        h1 {
-            font-size: 4em; /* Large text size */
+        input {
             text-align: center;
-            animation: twinkle 1s infinite;
-            margin-bottom: 20px; /* Add some space below the text */
+            width: 120px;
+            height: 30px;
+            font-size: 1em;
         }
-
-        /* Define the twinkle animation */
-        @keyframes twinkle {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        p {
-            font-size: 2em; /* Large text size */
+        .emoji {
+            font-size: 1.2em;
+            width: 20px;
             text-align: center;
+            display: inline-block;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 1em;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: "Nunito", sans-serif;
+            text-transform: uppercase;
+            color: white;
+            background-color: rgb(59, 121, 80);
         }
     </style>
 </head>
-
 <body>
-    <h1>Будет добавлено!</h1>
-    <p><a href="index.html">Вернитесь на главную страницу.</a></p>
-</body>
+    <h1>Polskie czasowniki - Grupa V</h1>
+    <form id="cloze-test"></form>
+    <div class="button-container">
+        <button class="check-button" type="button" onclick="checkAnswers()">Проверь</button>
+        <button class="next-button" type="button" onclick="loadNewVerb()">Дальше</button>
+    </div>
+    
+    <script>
+        var verbs = [
+      {verb: "Błysnąć", translation: "Блеснуть,сверкнуть", forms: ["błysnę", "błyśniesz", "błyśnie", "błyśniemy", "błyśniecie", "błysną"]},
+    {verb: "Blaknąć", translation: "Блекнуть", forms: ["blaknę", "blaknie", "blakniemy", "blakniecie", "blakną"]},
+    {verb: "Beknąć", translation: "Рыгнуть", forms: ["beknę", "bekniesz", "beknie", "bekniemy", "bekniecie", "bekną"]},
+    {verb: "Biegnąć", translation: "Бежать", forms: ["biegnę", "biegniesz", "biegnie", "biegniemy", "biegniecie", "biegną"]},
+    {verb: "Brzęknąć", translation: "Брякнуть, Звенеть", forms: ["brzęknę", "brzękniesz", "brzęknie", "brzękniemy", "brzękniecie", "brzękną"]},
+    {verb: "Buchnąć", translation: "Ударить", forms: ["buchnę", "buchniesz", "buchnie", "buchniemy", "buchniecie", "buchną"]},
+    {verb: "Chłonąć", translation: "Впитывать", forms: ["chłonę", "chłoniesz", "chłonie", "chłoniemy", "chłoniecie", "chłoną"]},
+    {verb: "Cieknąć", translation: "Течь", forms: ["cieknę", "ciekniesz", "cieknie", "ciekną"]},
+    {verb: "Frunąć", translation: "Лететь, порхать", forms: ["frunę", "fruniesz", "frunie", "fruniemy", "fruniecie", "fruną"]},
+    {verb: "Gasnąć", translation: "Гаснуть, тухнуть", forms: ["gasnę", "gaśniesz", "gaśnie", "gaśniemy", "gaśniecie", "gasną"]},
+    {verb: "Kisnąć", translation: "Киснуть", forms: ["kisnę", "kiśniesz", "kiśnie", "kiśniemy", "kiśniecie", "kisną"]},
+    {verb: "Klęknąć", translation: "Встать на колени", forms: ["klęknę", "klękniesz", "klęknie", "klękniemy", "klękniecie", "klękną"]},
+    {verb: "Klasnąć", translation: "Хлопнуть в ладони", forms: ["klasnę", "klaśniesz", "klaśnie", "klaśniemy", "klaśniecie", "klasną"]},
+    {verb: "Kucnąć", translation: "Присесть", forms: ["kucnę", "kucniesz", "kucnie", "kucniemy", "kucniecie", "kucną"]},
+    {verb: "Kwitnąć", translation: "Цвести", forms: ["kwitnę", "kwitniesz", "kwitnie", "kwitniemy", "kwitniecie", "kwitną"]},
+    {verb: "Legnąć", translation: "Лечь", forms: ["legnę", "legniesz", "legnie", "legniemy", "legniecie", "legną"]},
+    {verb: "Musnąć", translation: "Коснуться", forms: ["musnę", "muśniesz", "muśnie", "muśniemy", "muśniecie", "musną"]},
+    {verb: "Nasiąknąć", translation: "Пропитаться", forms: ["nasiąknę", "nasiąkniesz", "nasiąknie", "nasiąkniemy", "nasiąkniecie", "nasiąkną"]},
+	{verb: "Obwisnąć", translation: "Обвиснуть", forms: ["obwisnę", "obwisniesz", "obwisnie", "obwisniemy", "obwisniecie", "obwisną"]},
+	{verb: "Ogłuchnąć", translation: "Оглохнуть", forms: ["ogłuchnę", "ogłuchniesz", "ogłuchnie", "ogłuchniemy", "ogłuchniecie", "ogłuchną"]},
+    {verb: "Oklapnąć", translation: "Обвиснуть, сникнуть", forms: ["oklapnę", "oklapniesz", "oklapnie", "oklapniemy", "oklapniecie", "oklapną"]},
+    {verb: "Ominąć", translation: "Обойти", forms: ["ominę", "ominiesz", "ominie", "ominiemy", "ominiecie", "ominą"]},
+    {verb: "Ostygnąć", translation: "Остыть", forms: ["ostygnę", "ostygniesz", "ostygnie", "ostygniemy", "ostygniecie", "ostygną"]},
+    {verb: "Oślepnąć", translation: "Ослепнуть", forms: ["oślepnę", "oślepniesz", "oślepnie", "oślepniemy", "oślepniecie", "oślepną"]},
+    {verb: "Pełznąć", translation: "Ползти", forms: ["pełznę", "pełzniesz", "pełznie", "pełzniemy", "pełzniecie", "pełzną"]},
+    {verb: "Pisnąć", translation: "Пискнуть, пикнуть", forms: ["pisnę", "piśniesz", "piśnie", "piśniemy", "piśniecie", "pisną"]},
+    {verb: "Płonąć", translation: "Гореть, пылать;", forms: ["płonę", "płoniesz", "płonie", "płoniemy", "płoniecie", "płoną"]},
+    {verb: "Płynąć", translation: "Плыть, литься, течь", forms: ["płynę", "płyniesz", "płynie", "płyniemy", "płyniecie", "płyną"]},
+    {verb: "Poślizgnąć", translation: "Подскользнуться", forms: ["poślizgnę", "poślizgniesz", "poślizgnie", "poślizgniemy", "poślizgniecie", "poślizgną"]},
+    {verb: "Prysnąć", translation: "Брызнуть", forms: ["prysnę", "pryśniesz", "pryśnie", "pryśniemy", "pryśniecie", "prysną"]},
+    {verb: "Rosnąć", translation: "Расти", forms: ["rosnę", "rośniesz", "rośnie", "rośniemy", "rośniecie", "rosną"]},
+    {verb: "Runąć", translation: "Рухнуть", forms: ["runę", "runiesz", "runie", "runiemy", "runiecie", "runą"]},
+    {verb: "Skinąć", translation: "Кивнуть", forms: ["skinę", "skiniesz", "skinie", "skiniemy", "skiniecie", "skiną"]},
+    {verb: "Słynąć", translation: "Славиться", forms: ["słynę", "słyniesz", "słynie", "słyniemy", "słyniecie", "słyną"]},
+    {verb: "Splunąć", translation: "Сплюнуть", forms: ["splunę", "spluniesz", "splunie", "spluniemy", "spluniecie", "spluną"]},
+    {verb: "Ścisnąć", translation: "Сжать, стиснуть", forms: ["ścisnę", "ścisniesz", "ścisnie", "ścisniemy", "ścisniecie", "ścisną"]},
+    {verb: "Sunąć", translation: "Скользить", forms: ["sunę", "suniesz", "sunie", "suniemy", "suniecie", "suną"]},
+    {verb: "Tchnąć", translation: "Вздохнуть", forms: ["tchnę", "tchniesz", "tchnie", "tchniemy", "tchniecie", "tchną"]},
+    {verb: "Tonąć", translation: "Тонуть", forms: ["tonę", "toniesz", "tonie", "toniemy", "toniecie", "toną"]},
+	{verb: "Trzasnąć", translation: "Треснуть, хлопнуть ", forms: ["trzasnę", "trzaśniesz", "trzaśnie", "trzaśniemy", "trzaśniecie", "trzasną"]},
+    {verb: "Trząsnąć, trząchnąć", translation: "Тряхнуть", forms: ["trząsnę|trząchnę", "trząśniesz|trząchniesz", "trząśnie|trząchnie", "trząśniemy|trząchniemy", "trząśniecie|trząchniecie", "trząsną|trząchną"]},
+    {verb: "Uśmiechnąć się", translation: "Улыбнуться, усмехнуться", forms: ["uśmiechnę się", "uśmiechniesz się", "uśmiechnie się", "uśmiechniemy się", "uśmiechniecie się", "uśmiechną się"]},
+    {verb: "Zamilknąć", translation: "Замолкнуть", forms: ["zamilknę", "zamilkniesz", "zamilknie", "zamilkniemy", "zamilkniecie", "zamilkną"]},
+    {verb: "Zasnąć", translation: "Заснуть", forms: ["zasnę", "zaśniesz", "zaśnie", "zaśniemy", "zaśniecie", "zasną"]},
+    {verb: "Zawisnąć", translation: "Зависнуть", forms: ["zawisnę", "zawiśniesz", "zawiśnie", "zawiśniemy", "zawiśniecie", "zawisną"]},
+    {verb: "Zawinąć", translation: "Завернуть", forms: ["zawinę", "zawiniesz", "zawinie", "zawiniemy", "zawiniecie", "zawiną"]},
+    {verb: "Zginąć", translation: "Погибнуть", forms: ["zginę", "zginiesz", "zginie", "zginiemy", "zginiecie", "zginą"]},
+    {verb: "Zgasnąć", translation: "Погаснуть", forms: ["zgasnę", "zgaśniesz", "zgaśnie", "zgaśniemy", "zgaśniecie", "zgasną"]},
+    {verb: "Zionąć", translation: "Испускать (дым, огонь)", forms: ["zionę", "zioniesz", "zionie", "zioniemy", "zioniecie", "zioną"]},
+	{verb: "Zniknąć", translation: " исчезнуть ", forms: ["zniknę", "znikniesz", "zniknie", "znikniemy", "znikniecie", "znikną"]},
+    {verb: "Zlęknąć się", translation: "Испугаться", forms:["zlęknę się", "zlękniesz się", "zlęknie się", "zlękniemy się", "zlękniecie się", "zlękną się"]},
+        ];
+        
+       var form = document.getElementById('cloze-test');
+        var currentVerb = null;
+        
+        function loadNewVerb() {
+            form.innerHTML = "";
+            currentVerb = verbs[Math.floor(Math.random() * verbs.length)];
+            
+            var questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            
+            var questionP = document.createElement('p');
+            questionP.textContent = currentVerb.verb + ' (' + currentVerb.translation + '):';
+            questionDiv.appendChild(questionP);
+            
+            var pronouns = ["Ja", "Ty", "On/ona/ono", "My", "Wy", "Oni/one"];
+            pronouns.forEach(function(pronoun, i) {
+                let wrapper = document.createElement('div');
+                wrapper.classList.add('input-wrapper');
+                
+                let pronounSpan = document.createElement('span');
+                pronounSpan.textContent = pronoun;
+                pronounSpan.style.width = "80px";
+                pronounSpan.style.textAlign = "right";
+                
+                let inputField = document.createElement('input');
+                inputField.type = 'text';
+                inputField.dataset.answer = currentVerb.forms[i];
+                
+                let emojiSpan = document.createElement('span');
+                emojiSpan.classList.add('emoji');
+                
+                wrapper.appendChild(pronounSpan);
+                wrapper.appendChild(inputField);
+                wrapper.appendChild(emojiSpan);
+                questionDiv.appendChild(wrapper);
+            });
+            
+            form.appendChild(questionDiv);
+        }
+        
+        function checkSingleAnswer(input) {
+            let emojiSpan = input.nextElementSibling;
+            let correctAnswers = input.dataset.answer.split('|').map(ans => ans.toLowerCase().trim());
+            if (correctAnswers.includes(input.value.toLowerCase().trim())) {
+                input.className = 'correct';
+                emojiSpan.textContent = '✔️';
+            } else {
+                input.className = 'incorrect';
+                emojiSpan.textContent = '❌';
+            }
+        }
+            function checkAnswers() {
+        document.querySelectorAll('input').forEach(checkSingleAnswer);
+    }
 
+    function allFieldsCorrect() {
+        return Array.from(document.querySelectorAll('input')).every(input => input.classList.contains('correct'));
+    }
+
+    function getActiveField() {
+        return document.activeElement;
+    }
+
+        document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            // Check if all fields are correct
+            if (allFieldsCorrect()) {
+                loadNewVerb(); // Load the next question if all fields are correct
+            } else {
+                let activeField = getActiveField();
+                
+                // Check if the active field is an input field
+                if (activeField && activeField.tagName === "INPUT") {
+                    checkSingleAnswer(activeField); // Check only the active field
+                }
+            }
+        }
+    });
+
+    loadNewVerb();  // Initially load a verb for level 1
+    </script>
+</body>
 </html>

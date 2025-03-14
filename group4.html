@@ -64,13 +64,13 @@
     <h1>Polskie czasowniki - Grupa IV</h1>
     <form id="cloze-test"></form>
     <div class="button-container">
-        <button class="check-button" onclick="checkAnswers()">Проверь</button>
-        <button class="next-button" onclick="loadNewVerb()">Дальше</button>
+        <button class="check-button" type="button" onclick="checkAnswers()">Проверь</button>
+        <button class="next-button" type="button" onclick="loadNewVerb()">Дальше</button>
     </div>
     
     <script>
         var verbs = [
-            {verb: "Adresować", translation: "Адресовать", forms: ["adresuję", "adresujesz", "adresuje", "adresujemy", "adresujecie", "adresują"]},
+             {verb: "Adresować", translation: "Адресовать", forms: ["adresuję", "adresujesz", "adresuje", "adresujemy", "adresujecie", "adresują"]},
     {verb: "Akcentować", translation: "Акцентировать", forms: ["akcentuję", "akcentujesz", "akcentuje", "akcentujemy", "akcentujecie", "akcentują"]},
     {verb: "Aktualizować", translation: "Обновлять", forms: ["aktualizuję", "aktualizujesz", "aktualizuje", "aktualizujemy", "aktualizujecie", "aktualizują"]},
     {verb: "Analizować", translation: "Анализировать", forms: ["analizuję", "analizujesz", "analizuje", "analizujemy", "analizujecie", "analizują"]},
@@ -131,7 +131,7 @@
     {verb: "Żałować", translation: "Жалеть,сожалеть", forms: ["żałuję", "żałujesz", "żałuje", "żałujemy", "żałujecie", "żałują"]},
         ];
         
-        var form = document.getElementById('cloze-test');
+       var form = document.getElementById('cloze-test');
         var currentVerb = null;
         
         function loadNewVerb() {
@@ -173,8 +173,8 @@
         
         function checkSingleAnswer(input) {
             let emojiSpan = input.nextElementSibling;
-            let correctAnswer = input.dataset.answer.toLowerCase();
-            if (input.value.toLowerCase() === correctAnswer) {
+            let correctAnswers = input.dataset.answer.split('|').map(ans => ans.toLowerCase().trim());
+            if (correctAnswers.includes(input.value.toLowerCase().trim())) {
                 input.className = 'correct';
                 emojiSpan.textContent = '✔️';
             } else {
@@ -182,15 +182,36 @@
                 emojiSpan.textContent = '❌';
             }
         }
-        
+            function checkAnswers() {
+        document.querySelectorAll('input').forEach(checkSingleAnswer);
+    }
+
+    function allFieldsCorrect() {
+        return Array.from(document.querySelectorAll('input')).every(input => input.classList.contains('correct'));
+    }
+
+    function getActiveField() {
+        return document.activeElement;
+    }
+
         document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                checkSingleAnswer(document.activeElement);
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            // Check if all fields are correct
+            if (allFieldsCorrect()) {
+                loadNewVerb(); // Load the next question if all fields are correct
+            } else {
+                let activeField = getActiveField();
+                
+                // Check if the active field is an input field
+                if (activeField && activeField.tagName === "INPUT") {
+                    checkSingleAnswer(activeField); // Check only the active field
+                }
             }
-        });
-        
-        loadNewVerb();
+        }
+    });
+
+    loadNewVerb();  // Initially load a verb for level 1
     </script>
 </body>
 </html>
