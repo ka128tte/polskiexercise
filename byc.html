@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>Odmiana czasownika "być"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+        }
+        .correct {
+            color: darkgreen;
+            background-color: lightgreen;
+        }
+        .incorrect {
+            color: darkred;
+            background-color: lightcoral;
+            text-decoration: line-through;
+        }
+        .question p {
+            font-size: 1.5em;
+            margin-top: 50px;
+        }
+        .input-wrapper {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 10px;
+        }
+        .input-wrapper span {
+            margin-right: 10px;
+        }
+        input {
+            text-align: center;
+            width: 80px;
+            height: 30px;
+            font-size: 1em;
+        }
+        .emoji {
+            font-size: 1.2em;
+            width: 20px;
+            text-align: center;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 1em;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: "Nunito", sans-serif;
+            text-transform: uppercase;
+            color: white;
+            background-color: rgb(59, 121, 80);
+        }
+        .horizontal-row {
+            display: flex;
+            justify-content: center;
+        }
+        .centered-layout {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .centered-container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+        .input-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .pronoun-label {
+            font-weight: normal;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Odmiana czasownika "być"</h1>
+    <form id="cloze-test"></form>
+    <div class="button-container">
+        <button class="check-button" type="button" onclick="checkAnswers()">Проверь</button>
+        <button class="next-button" type="button" onclick="loadNewVerb()">Дальше</button>
+    </div>
+    
+    <script>
+        var verbs = [
+            {verb: "Być", translation: "Быть (Прошедшее)", tense: "past", forms: {ja: ["byłem", "byłam"], ty: ["byłeś", "byłaś"], on: ["był", "była", "było"], my: ["byliśmy", "byłyśmy"], wy: ["byliście", "byłyście"], oni: ["byli", "były"]}},
+            {verb: "Być", translation: "Быть (Настоящее)", tense: "present", forms: ["jestem", "jesteś", "jest", "jesteśmy", "jesteście", "są"]},
+            {verb: "Być", translation: "Быть (будущее)", tense: "future", forms: ["będę", "będziesz", "będzie", "będziemy", "będziecie", "będą"]},
+        ];
+        
+        var form = document.getElementById('cloze-test');
+        var currentVerb = null;
+        
+function loadNewVerb() {
+    form.innerHTML = "";
+    currentVerb = verbs[Math.floor(Math.random() * verbs.length)];
+
+    var questionDiv = document.createElement('div');
+    questionDiv.className = 'question centered-layout'; // Added centered-layout class
+
+    var questionP = document.createElement('p');
+    questionP.textContent = currentVerb.verb + ' (' + currentVerb.translation + '):';
+    questionDiv.appendChild(questionP);
+    
+    var pronouns = [];
+    if (currentVerb.tense === 'past') {
+        // Past tense - Pronouns with gendered fields in rows
+        pronouns = [
+            ["Ja ♂", "Ja ♀"],        // First person
+            ["Ty ♂", "Ty ♀"],        // Second person
+            ["On", "Ona", "Ono"],     // Third person singular
+            ["My ♂", "My ♀"],        // First person plural
+            ["Wy ♂", "Wy ♀"],        // Second person plural
+            ["Oni ♂", "One ♀"]       // Third person plural
+        ];
+
+        // Create the past tense pronouns with horizontal alignment
+        pronouns.forEach(function(pronounPair, i) {
+            let wrapper = document.createElement('div');
+            wrapper.classList.add('input-container'); // Apply flex for horizontal layout
+
+            pronounPair.forEach(function(pronoun, index) {
+                let innerWrapper = document.createElement('div');
+                innerWrapper.classList.add('input-wrapper');
+
+                let pronounSpan = document.createElement('span');
+                pronounSpan.classList.add('pronoun-label');
+                pronounSpan.textContent = pronoun;
+
+                let inputField = document.createElement('input');
+                inputField.type = 'text';
+
+                // Assign correct form based on the pronoun and gender
+                if (pronoun === "Ja ♂" || pronoun === "Ja ♀") {
+                    inputField.dataset.answer = (pronoun === "Ja ♂") ? currentVerb.forms.ja[0] : currentVerb.forms.ja[1];
+                } else if (pronoun === "Ty ♂" || pronoun === "Ty ♀") {
+                    inputField.dataset.answer = (pronoun === "Ty ♂") ? currentVerb.forms.ty[0] : currentVerb.forms.ty[1];
+                } else if (pronoun === "On") {
+                    inputField.dataset.answer = currentVerb.forms.on[0];
+                } else if (pronoun === "Ona") {
+                    inputField.dataset.answer = currentVerb.forms.on[1];
+                } else if (pronoun === "Ono") {
+                    inputField.dataset.answer = currentVerb.forms.on[2];
+                } else if (pronoun === "My ♂" || pronoun === "My ♀") {
+                    inputField.dataset.answer = (pronoun === "My ♂") ? currentVerb.forms.my[0] : currentVerb.forms.my[1];
+                } else if (pronoun === "Wy ♂" || pronoun === "Wy ♀") {
+                    inputField.dataset.answer = (pronoun === "Wy ♂") ? currentVerb.forms.wy[0] : currentVerb.forms.wy[1];
+                } else if (pronoun === "Oni ♂") {
+                    inputField.dataset.answer = currentVerb.forms.oni[0];
+                } else if (pronoun === "One ♀") {
+                    inputField.dataset.answer = currentVerb.forms.oni[1];
+                }
+
+                let emojiSpan = document.createElement('span');
+                emojiSpan.classList.add('emoji');
+                
+                innerWrapper.appendChild(pronounSpan);
+                innerWrapper.appendChild(inputField);
+                innerWrapper.appendChild(emojiSpan);
+                wrapper.appendChild(innerWrapper);
+            });
+            questionDiv.appendChild(wrapper);
+        });
+
+    } else {
+        // Present/Future tense - Pronouns to the left of input field
+        pronouns = [
+            ["Ja"],
+            ["Ty"], 
+            ["On/ona/ono"],
+            ["My"],
+            ["Wy"],
+            ["Oni/one"]
+        ];
+
+        pronouns.forEach(function(pronounPair, i) {
+            let wrapper = document.createElement('div');
+            wrapper.classList.add('input-wrapper'); // Align pronouns to the left of input field
+
+            let pronounSpan = document.createElement('span');
+            pronounSpan.textContent = pronounPair.join(' - ');
+            pronounSpan.style.fontWeight = 'normal'; // Ensure the pronouns are not bold
+
+            let inputField = document.createElement('input');
+            inputField.type = 'text';
+            inputField.dataset.answer = currentVerb.forms[i]; // For present/future tense
+
+            let emojiSpan = document.createElement('span');
+            emojiSpan.classList.add('emoji');
+
+            wrapper.appendChild(pronounSpan);
+            wrapper.appendChild(inputField);
+            wrapper.appendChild(emojiSpan);
+            questionDiv.appendChild(wrapper);
+        });
+    }
+
+    form.appendChild(questionDiv);
+}
+
+
+        
+        function checkSingleAnswer(input) {
+            let emojiSpan = input.nextElementSibling;
+            let correctAnswers = input.dataset.answer.split('|').map(ans => ans.toLowerCase().trim());
+            if (correctAnswers.includes(input.value.toLowerCase().trim())) {
+                input.className = 'correct';
+                emojiSpan.textContent = '✔️';
+            } else {
+                input.className = 'incorrect';
+                emojiSpan.textContent = '❌';
+            }
+        }
+
+        function checkAnswers() {
+            document.querySelectorAll('input').forEach(checkSingleAnswer);
+        }
+
+        function allFieldsCorrect() {
+            return Array.from(document.querySelectorAll('input')).every(input => input.classList.contains('correct'));
+        }
+
+        function getActiveField() {
+            return document.activeElement;
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (allFieldsCorrect()) {
+                    loadNewVerb();
+                } else {
+                    let activeField = getActiveField();
+                    if (activeField && activeField.tagName === "INPUT") {
+                        checkSingleAnswer(activeField);
+                    }
+                }
+            }
+        });
+
+        loadNewVerb();
+    </script>
+</body>
+</html>
